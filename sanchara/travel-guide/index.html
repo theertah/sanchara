@@ -1,22 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#F7F5EF">
-  <title>Travel Guide | SANCHARA</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SANCHARA – Your City. Your Journey.</title>
+  <meta name="description" content="Explore Bengaluru with SANCHARA, your travel discovery guide.">
 
+  <!-- Fonts (Google Fonts). Remove these two lines if you prefer system fonts. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Manrope:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="../css/landing.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/travel-planner.css">
 </head>
 <body>
-  <!-- Temporary page. Replace with the real Travel Guide when it is ready. -->
-  <main class="stage placeholder">
-    <h1 class="reveal" style="--d:100">Travel Guide</h1>
-    <p class="reveal" style="--d:250">This section is still being put together. Check back soon for places, experiences and hidden gems.</p>
-    <a class="back-link reveal" style="--d:400" href="../">Back to SANCHARA</a>
+  <!-- The background photo is set in travel-planner.css (see .page-background). -->
+  <div class="page-background" aria-hidden="true"></div>
+
+  <main class="page">
+    <div class="main-container">
+
+      <!-- ============ HEADER ============ -->
+<header class="site-header">
+  <h1 class="brand">SANCHARA</h1>
+  <div class="brand-divider" aria-hidden="true"><span></span></div>
+  <p class="page-title">Travel Guide · Explore Bengaluru</p>
+  <p class="tagline">Your City. Your Journey. Discover the Garden City, one thoughtful stop at a time.</p>
+</header>
+      <!-- ============ AI CHAT SECTION ============ -->
+      <section class="chat-section" aria-label="Ask SANCHARA">
+        <form class="chat-form" id="chat-form">
+          <label for="chat-input" class="visually-hidden">Ask SANCHARA</label>
+          <input
+            type="text"
+            id="chat-input"
+            class="chat-input"
+            placeholder="Where would you like to explore today?"
+            autocomplete="off">
+          <button type="submit" class="send-button">Send</button>
+        </form>
+
+        <!-- FUTURE: conversational AI messages will be rendered inside this div -->
+        <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+      </section>
+
+      <!-- ============ RECOMMENDED DESTINATIONS ============ -->
+      <section class="recommended" aria-labelledby="recommended-title">
+        <h2 id="recommended-title">Recommended for You</h2>
+
+        <div class="destination-grid">
+
+          <!-- ===== CARD 1 ===== -->
+          <article class="destination-card">
+            <img src="assets/images/Bangalore%20Palace.jpg" alt="Bangalore Palace">
+            <div class="Built in 1878 and inspired by Windsor Castle, Bangalore Palace is a majestic Tudor Revival landmark featuring fortified towers and vine-draped walls. Once the royal residence of the Wadiyar dynasty, it now stands as a prominent heritage museum and cultural venue in Bengaluru.">
+              <span class="destination-category">Heritage</span>
+              <h3>Bangalore Palace</h3>
+              <p>Built in 1878 after Windsor Castle, Bangalore Palace is a Tudor-style landmark featuring fortified towers and vine-covered walls. Once home to the Wadiyar dynasty, it now serves as a premier heritage museum and cultural venue in Bengaluru.</p>
+              <button class="add-to-trip" type="button">Add to Trip</button>
+            </div>
+          </article>
+
+          <!-- ===== CARD 2 ===== -->
+          <article class="destination-card">
+            <img src="assets/images/Cubbon%20Park.jpg" alt="Cubbon Park">
+            <div class="Established in 1870, Cubbon Park is a sprawling 300-acre green lung in the heart of Bengaluru, home to lush bamboo groves, vibrant flowering trees, and over 6,000 plants. Beyond its serene walking trails, the historic park houses iconic red-brick landmarks like the State Central Library and the High Court of Karnataka.">
+              <span class="destination-category">Garden</span>
+              <h3>Cubbon Park</h3>
+              <p>Established in 1870, Cubbon Park is a sprawling 300-acre green lung in the heart of Bengaluru, home to lush bamboo groves, vibrant flowering trees, and over 6,000 plants.</p>
+              <button class="add-to-trip" type="button">Add to Trip</button>
+            </div>
+          </article>
+
+          <!-- ===== CARD 3 ===== -->
+          <article class="destination-card">
+            <img src="assets/images/Isckon%20Banglore.jpg" alt="ISKCON Bangalore">
+            <div class="Inaugurated in 1997 in Rajajinagar, the ISKCON Temple is one of the largest Radha-Krishna complexes in the world, blending traditional Dravidian and modern glass architecture. Featuring a gold-plated sanctum and panoramic city views, it stands as a major spiritual and cultural landmark in Bengaluru.">
+              <span class="destination-category">SPIRITUAL</span>
+              <h3>Isckon Temple</h3>
+              <p>Inaugurated in 1997 in Rajajinagar, the ISKCON Temple is one of the largest Radha-Krishna complexes in the world, blending traditional Dravidian and modern glass architecture.s as a major spiritual and cultural landmark in Bengaluru.</p>
+              <button class="add-to-trip" type="button">Add to Trip</button>
+            </div>
+          </article>
+
+          <!-- ===== CARD 4 ===== -->
+          <article class="destination-card">
+            <img src="assets/images/MG%20road.jpg" alt="MG Road">
+            <div class="Stretching from Trinity Circle to Anil Kumble Circle, Mahatma Gandhi (MG) Road is Bengaluru’s bustling commercial and cultural spine, known for its upscale boutiques, historic bookshops, and vibrant cafes. Anchored by the scenic MG Road Boulevard and the Namma Metro corridor, it seamlessly blends colonial-era charm with modern urban nightlife.">
+              <span class="destination-category">Shopping</span>
+              <h3>MG Road</h3>
+              <p>Stretching from Trinity Circle to Anil Kumble Circle, Mahatma Gandhi (MG) Road is Bengaluru’s bustling commercial and cultural spine, known for its upscale boutiques, historic bookshops, and vibrant cafes blends colonial-era charm with modern urban nightlife.</p>
+              <button class="add-to-trip" type="button">Add to Trip</button>
+            </div>
+          </article>
+
+          <!-- ===== CARD 5 ===== -->
+          <article class="destination-card">
+            <img src="assets/images/Art%20Musem.jpg" alt="National Gallery of Modern Art">
+            <div class="Housed in the heritage Manikyavelu Mansion on Palace Road, the National Gallery of Modern Art (NGMA) Bengaluru showcases around 500 works of Indian art spanning from the early 18th century to the present day. Featuring masterpieces by artists like Raja Ravi Varma, Amrita Sher-Gil, and Rabindranath Tagore alongside tranquil gardens and a mirror pool, it serves as a premier cultural and artistic sanctuary in the city.">
+              <span class="destination-category">Art and Cluture</span>
+              <h3>National Gallery of Mordern Art</h3>
+              <p>Housed in the heritage Manikyavelu Mansion on Palace Road, the National Gallery of Modern Art (NGMA) Bengaluru showcases around 500 works of Indian art spanning from the early 18th century to the present day.</p>
+              <button class="add-to-trip" type="button">Add to Trip</button>
+            </div>
+          </article>
+
+          <!-- ===== CARD 6 ===== -->
+          <article class="destination-card">
+            <img src="assets/images/CTR.jpg" alt="CTR">
+            <div class="Established in the 1920s in Malleshwaram, Central Tiffin Room (CTR / Shri Sagar) is an iconic Bengaluru eatery celebrated for its crisp, golden benne masala dosa and frothy filter coffee. Retaining its nostalgic old-world charm, it remains a beloved culinary institution where locals and visitors queue daily for classic South Indian breakfast fare.">
+              <span class="destination-category">Food</span>
+              <h3>Central Tiffen Room</h3>
+              <p>Established in the 1920s in Malleshwaram, Central Tiffin Room (CTR) is an iconic Bengaluru eatery celebrated for its crisp, golden benne masala dosa and frothy filter coffee..</p>
+              <button class="add-to-trip" type="button">Add to Trip</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ============ FUTURE SECTIONS (add below, inside .main-container) ============
+           <section id="itinerary">      Day-wise itinerary        </section>
+           <section id="transit">        BMTC / Namma Metro cards  </section>
+           <section id="map">            Interactive map           </section>
+           <section id="nearby">         Attractions, restaurants, medical facilities </section>
+      ================================================================================ -->
+
+      <footer class="site-footer">
+        <p>SANCHARA · Your City. Your Journey.</p>
+      </footer>
+
+    </div>
   </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
