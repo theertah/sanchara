@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102B49">
+  <title>SANCHARA | BMTC Intelligent Transit Dashboard</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+  <!-- Leaflet & MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+
+  <!-- Application Stylesheets -->
+  <link rel="stylesheet" href="css/bmtc-common.css">
+  <link rel="stylesheet" href="css/bus-animations.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="sanchara-header">
+    <a href="../" class="brand-group">
+      <span class="brand-logo-text">SANCHARA</span>
+      <span class="brand-section-badge">BMTC Engine</span>
+    </a>
+
+    <!-- Service Switch Toggle -->
+    <div class="service-toggle-pill">
+      <button id="toggleOrdBtn" class="service-toggle-btn is-selected" type="button">Ordinary Fleet</button>
+      <button id="toggleVajBtn" class="service-toggle-btn" type="button">AC Volvo Vajra</button>
+    </div>
+
+    <nav class="header-nav">
+      <a href="./" class="nav-link-btn">← Service Depot</a>
+      <a href="admin.html" class="nav-link-btn btn-admin">Admin Portal</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-container">
+
+    <!-- Active Service Banner -->
+    <section class="service-mode-banner">
+      <div class="mode-info-left">
+        <img id="modeBannerBus" src="/assets/img/bmtc_ordinary_bus.png" class="mode-icon-bus" alt="Service Bus" style="width:75px; height:auto;" />
+        <div>
+          <h2 id="modeBannerTitle" class="mode-heading">BMTC Ordinary City Services</h2>
+          <p id="modeBannerSub" class="mode-subheading">7,941 verified routes • 10,128 stop network • Stage fares from ₹5</p>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <span class="badge badge-ordinary" style="background:rgba(255,255,255,0.15); color:#FFF; border-color:rgba(255,255,255,0.3);">
+          LIVE TRANSIT ACTIVE
+        </span>
+      </div>
+    </section>
+
+    <!-- 6 Core Functional Modules Navigation Tabs -->
+    <nav class="module-tabs" aria-label="Dashboard Modules">
+      <button class="tab-btn is-active" data-tab="tabPlanner" type="button">
+        <span>🗺️ Route Planner & Map</span>
+      </button>
+      <button class="tab-btn" data-tab="tabFare" type="button">
+        <span>💳 Fare Calculator & m-Ticket</span>
+      </button>
+      <button class="tab-btn" data-tab="tabCrowd" type="button">
+        <span>👥 Real-Time Crowd Prediction</span>
+      </button>
+      <button class="tab-btn" data-tab="tabAlerts" type="button">
+        <span>⚠️ Smart Service Alerts</span>
+      </button>
+      <button class="tab-btn" data-tab="tabComplaints" type="button">
+        <span>📝 Complaint Box & Grievance</span>
+      </button>
+    </nav>
+
+    <!-- ==========================================
+         MODULE 1: ROUTE PLANNER & BANGALORE MAP
+         ========================================== -->
+    <section id="tabPlanner" class="tab-panel">
+      <div class="planner-grid-layout">
+        
+        <!-- Left Column: Input Form, Fallback, & Journey Timeline -->
+        <div>
+          <div class="route-input-panel">
+            <h3 style="font-size:1.4rem; margin-bottom:16px; color:#173B64;">Plan Your Bangalore Journey</h3>
+            
+            <!-- Source Input -->
+            <div class="form-group input-with-autocomplete">
+              <label class="form-label" for="originInput">Origin / Boarding Stop</label>
+              <input type="text" id="originInput" class="form-input" placeholder="e.g. Kempegowda Bus Station(Majestic/KBS)" autocomplete="off" />
+              <div id="originDropdown" class="autocomplete-dropdown"></div>
+            </div>
+
+            <!-- Swap Stops Button -->
+            <div class="swap-btn-container">
+              <button id="swapStopsBtn" class="swap-btn" title="Swap Origin and Destination" type="button">
+                ⇅
+              </button>
+            </div>
+
+            <!-- Destination Input -->
+            <div class="form-group input-with-autocomplete">
+              <label class="form-label" for="destInput">Destination Stop</label>
+              <input type="text" id="destInput" class="form-input" placeholder="e.g. Hebbala or Electronic City" autocomplete="off" />
+              <div id="destDropdown" class="autocomplete-dropdown"></div>
+            </div>
+
+            <!-- Instant Live Fare & Tourist Conversion Preview (Auto-calculated when stops are given) -->
+            <div id="liveFareNoticeBox" style="display:none; background:#FFF9EF; border:1px solid #E6DFD2; border-left:4px solid #2E7D32; border-radius:10px; padding:12px 14px; margin-bottom:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.75rem; font-weight:800; color:#2E7D32; text-transform:uppercase; letter-spacing:0.06em;">⚡ Instant Fare Estimation</span>
+                <span id="liveDistPill" style="font-size:0.75rem; font-weight:700; color:#173B64; background:#E8F0F8; padding:2px 8px; border-radius:999px;">~0 km</span>
+              </div>
+              <div style="display:flex; gap:12px; align-items:baseline; margin:6px 0 4px;">
+                <span id="liveFareOrdinary" style="font-size:1.35rem; font-weight:800; color:#173B64;">₹0</span>
+                <span id="liveFareVajra" style="font-size:1.05rem; font-weight:700; color:#D97662;">AC: ₹0</span>
+                <span id="liveFareForex" style="font-size:0.85rem; font-weight:600; color:#64748B;">($0.00 USD)</span>
+              </div>
+              <div style="font-size:0.78rem; color:#64748B;">
+                Foreigner-friendly fare computed directly between selected stops. Click below for complete route & timeline.
+              </div>
+            </div>
+
+            <!-- Routing Mode Toggle -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+              <div>
+                <label class="form-label" for="routingModeSelect">Dijkstra Mode</label>
+                <select id="routingModeSelect" class="form-select">
+                  <option value="fastest">⚡ Fastest Journey</option>
+                  <option value="shortest">📏 Shortest Distance</option>
+                </select>
+              </div>
+              <div style="display:flex; align-items:flex-end;">
+                <button id="useGeoBtn" class="btn-outline" style="width:100%; padding:11px;" type="button">
+                  📍 Current Location
+                </button>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display:flex; gap:10px;">
+              <button id="planRouteBtn" class="btn-primary" style="flex:1;" type="button">
+                Find My Journey →
+              </button>
+              <button id="clearSearchBtn" class="btn-outline" type="button">
+                Clear
+              </button>
+            </div>
+
+            <!-- Error Notice Box -->
+            <div id="plannerErrorBox" class="alert-strip" style="display:none; margin-top:16px; background:#FDE8E5; border-left-color:#C62828; color:#C62828;"></div>
+
+            <!-- AC Volvo Fallback Notification Box -->
+            <div id="vajraFallbackBox" class="fallback-notice-box" style="display:none;"></div>
+          </div>
+
+          <!-- Journey Results & 8-Step Timeline Panel -->
+          <div id="journeyResultsPanel" class="journey-timeline-container" style="display:none;">
+            
+            <!-- Quick Summary Metrics -->
+            <div id="journeySummaryMetrics"></div>
+
+            <!-- Journey Alternatives Selection (Phase 4) -->
+            <div id="journeyAlternativesSection" class="journey-alternatives-container" style="margin-bottom:24px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <h3 style="font-size:1.2rem; color:#173B64; margin:0; font-family:'Manrope',sans-serif; font-weight:800;">
+                  Available Journey Alternatives
+                </h3>
+                <span id="alternativesCountBadge" class="badge badge-ordinary" style="font-weight:700;">1 Option</span>
+              </div>
+              <p style="font-size:0.82rem; color:#64748B; margin-top:0; margin-bottom:12px;">
+                Compare direct routes and verified interchange transfers. Click any alternative card to inspect its itinerary and highlight it on the map.
+              </p>
+              <div id="alternativesCardsList" class="alternatives-cards-list"></div>
+            </div>
+
+            <!-- 8-Step Timeline -->
+            <h4 style="font-size:1.05rem; color:#202B38; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.04em;">
+              Selected Route • Step-by-Step Commuter Progression
+            </h4>
+            <div id="eightStepTimeline"></div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Leaflet Bangalore Map -->
+        <div class="map-panel">
+          <div class="map-header">
+            <div>
+              <b>Bangalore Transport Map</b> • <span style="color:#77808C;">Leaflet / OpenStreetMap</span>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <span class="badge" style="background:#E8F0F8; color:#173B64;">7,964 Geocoded Stops</span>
+              <span class="badge" style="background:#F1F5F9; color:#475569; border:1px solid #E2E8F0;">Low-Contrast Network</span>
+            </div>
+          </div>
+          <div id="bmtcMap"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODULE 2: FARE CALCULATOR & SIMULATED TICKET
+         ========================================== -->
+    <section id="tabFare" class="tab-panel" style="display:none;">
+      <div style="display:grid; grid-template-columns:460px 1fr; gap:24px;">
+        
+        <!-- Left: Stop-Based Fare Input & Customization -->
+        <div class="card-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="font-size:1.35rem; color:#173B64; margin:0;">BMTC Fare Calculator</h3>
+            <span class="badge" style="background:#E8F5E9; color:#2E7D32; font-weight:700;">🌐 Foreigner Friendly</span>
+          </div>
+
+          <p style="font-size:0.85rem; color:#64748B; margin-bottom:16px;">
+            Select any two bus stops in Bengaluru to calculate the exact government-notified transit fare and tourist currency conversion.
+          </p>
+
+          <!-- Origin Stop with Autocomplete -->
+          <div class="form-group input-with-autocomplete">
+            <label class="form-label" for="fareOriginInput">From: Origin Bus Stop</label>
+            <input type="text" id="fareOriginInput" class="form-input" placeholder="e.g. Kempegowda Bus Station(Majestic/KBS)" autocomplete="off" />
+            <div id="fareOriginDropdown" class="autocomplete-dropdown"></div>
+          </div>
+
+          <!-- Destination Stop with Autocomplete -->
+          <div class="form-group input-with-autocomplete">
+            <label class="form-label" for="fareDestInput">To: Destination Bus Stop</label>
+            <input type="text" id="fareDestInput" class="form-input" placeholder="e.g. Indiranagara or Whitefield" autocomplete="off" />
+            <div id="fareDestDropdown" class="autocomplete-dropdown"></div>
+          </div>
+
+          <!-- Service Schedule Selection -->
+          <div class="form-group">
+            <label class="form-label" for="fareServiceSelect">Service Category Schedule</label>
+            <select id="fareServiceSelect" class="form-select">
+              <option value="Ordinary">BMTC Ordinary City Service (from ₹5)</option>
+              <option value="Vajra">Vajra AC Volvo City Service (from ₹10)</option>
+              <option value="Vayu Vajra">Vayu Vajra Airport Express (from ₹60 to ₹320)</option>
+              <option value="Mofussil">BMTC Mofussil Outskirts Schedule</option>
+              <option value="NICE Road">NICE Road Express Service (with Toll)</option>
+            </select>
+          </div>
+
+          <!-- Direct Distance & Passengers (Auto-calculated from stops, or manual) -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+            <div>
+              <label class="form-label" for="fareDistInput">Distance (km)</label>
+              <input type="number" id="fareDistInput" class="form-input" value="10" min="1" max="80" />
+            </div>
+            <div>
+              <label class="form-label" for="farePassengerCount">Passengers</label>
+              <select id="farePassengerCount" class="form-select">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="fareConcessionSelect">Concession / Pass Type</label>
+            <select id="fareConcessionSelect" class="form-select">
+              <option value="General">Standard Adult Tariff</option>
+              <option value="DailyPass">Daily Transit Pass (₹70 Ord / ₹120 Vajra)</option>
+              <option value="Senior">Senior Citizen (25% Discount)</option>
+              <option value="Student">Student Pass (Free Ordinary / 50% Vajra)</option>
+              <option value="Child">Child Fare (50% Discount)</option>
+            </select>
+          </div>
+
+          <button id="calculateFareBtn" class="btn-primary" style="width:100%; margin-top:4px;" type="button">
+            Recalculate Fare Breakdown
+          </button>
+        </div>
+
+        <!-- Right: Fare Display, Foreigner Currency Conversions, & Digital Payment -->
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          
+          <!-- Main Fare Card -->
+          <div class="card-panel" style="text-align:center; padding:32px 24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:0.8rem; font-weight:800; color:#64748B; letter-spacing:0.08em; text-transform:uppercase;">
+                Total Estimated Fare
+              </span>
+              <span id="fareStopPairBadge" class="badge" style="background:#E8F0F8; color:#173B64; font-weight:700;">
+                Direct Stop Calculation
+              </span>
+            </div>
+
+            <!-- Big Rupee Display -->
+            <div id="calcTotalFareDisplay" style="font-size:3.8rem; font-weight:900; color:#173B64; line-height:1; margin:8px 0;">₹20</div>
+
+            <!-- Foreigner-Friendly Currency Pills -->
+            <div style="display:flex; justify-content:center; gap:8px; margin-bottom:14px;">
+              <span id="forexUsdBadge" class="badge" style="background:#FFF9EF; border:1px solid #E6DFD2; color:#102B49; font-size:0.85rem; font-weight:700; padding:4px 10px;">
+                💵 $0.23 USD
+              </span>
+              <span id="forexEurBadge" class="badge" style="background:#FFF9EF; border:1px solid #E6DFD2; color:#102B49; font-size:0.85rem; font-weight:700; padding:4px 10px;">
+                💶 €0.22 EUR
+              </span>
+              <span id="forexGbpBadge" class="badge" style="background:#FFF9EF; border:1px solid #E6DFD2; color:#102B49; font-size:0.85rem; font-weight:700; padding:4px 10px;">
+                💷 £0.18 GBP
+              </span>
+            </div>
+            
+            <h4 id="calcScheduleName" style="color:#202B38; margin:0 0 6px; font-size:1.15rem;">BMTC Ordinary City Service</h4>
+            <p id="calcStageBreakdown" style="color:#64748B; font-size:0.92rem; margin:0 0 20px;">
+              5 Stages • Base ₹20 • Standard Adult Tariff
+            </p>
+
+            <!-- Comparative Ordinary vs AC Volvo Vajra Quick Toggle -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:420px; margin:0 auto 20px;">
+              <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:10px;">
+                <div style="font-size:0.75rem; color:#64748B; font-weight:700;">NON-AC ORDINARY</div>
+                <div id="compOrdDisplay" style="font-size:1.3rem; font-weight:800; color:#173B64;">₹20</div>
+                <div style="font-size:0.72rem; color:#16A34A; font-weight:700;">Economy Choice</div>
+              </div>
+              <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:10px;">
+                <div style="font-size:0.75rem; color:#64748B; font-weight:700;">AC VOLVO VAJRA</div>
+                <div id="compVajDisplay" style="font-size:1.3rem; font-weight:800; color:#D97662;">₹35</div>
+                <div style="font-size:0.72rem; color:#D97662; font-weight:700;">Climate Luxury</div>
+              </div>
+            </div>
+
+            <button id="simPaymentBtn" class="btn-coral" style="padding:14px 32px; font-size:1.05rem;" type="button">
+              Simulate UPI Payment & Issue m-Ticket 🎟️
+            </button>
+            <div style="font-size:0.78rem; color:#64748B; margin-top:8px;">Instant digital ticket generation with verifiable QR code</div>
+          </div>
+
+          <!-- Foreigner & Tourist Commuter Guidance Panel -->
+          <div class="card-panel" style="padding:18px 22px; background:#FFFDF9; border-left:4px solid #D97662;">
+            <h4 style="font-size:0.98rem; color:#173B64; margin:0 0 8px; display:flex; align-items:center; gap:8px;">
+              <span>🧭 International Visitor & Tourist Transit Guide</span>
+            </h4>
+            <ul style="font-size:0.86rem; color:#475569; margin:0; padding-left:18px; line-height:1.6;">
+              <li><b>Payment methods on the bus:</b> You can pay the conductor directly via Indian UPI apps (Google Pay, PhonePe) by scanning the conductor's dynamic machine QR, or in cash (carry small ₹10, ₹20, or ₹50 notes).</li>
+              <li><b>Unlimited Day Pass:</b> Taking 3 or more trips today? Ask the conductor for a <b>Daily Transit Pass</b>: <b>₹70</b> for unlimited Ordinary buses, or <b>₹120 (Vajra Gold Pass)</b> for unlimited travel on both Ordinary & AC Volvo buses all day.</li>
+              <li><b>Airport Transit:</b> Vayu Vajra luxury Volvo buses operate 24/7 directly between Kempegowda International Airport (KIA) and major city centers.</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODULE 3: REAL-TIME CROWD PREDICTION
+         ========================================== -->
+    <section id="tabCrowd" class="tab-panel" style="display:none;">
+      <div style="display:grid; grid-template-columns:460px 1fr; gap:24px;">
+        <div class="card-panel">
+          <h3 style="font-size:1.4rem; color:#173B64; margin-bottom:16px;">Real-Time Crowd Predictor</h3>
+          
+          <div class="form-group">
+            <label class="form-label" for="crowdStopInput">Bus Stop / Transit Hub</label>
+            <input type="text" id="crowdStopInput" class="form-input" placeholder="e.g. Kempegowda Bus Station(Majestic/KBS)" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="crowdRouteInput">Route Number (Optional)</label>
+            <input type="text" id="crowdRouteInput" class="form-input" placeholder="e.g. 500-D or V-365" />
+          </div>
+
+          <button id="checkCrowdBtn" class="btn-primary" style="width:100%; margin-top:8px;" type="button">
+            Analyze Real-Time Occupancy
+          </button>
+
+          <!-- Commuter Feedback Section -->
+          <div style="margin-top:32px; border-top:1px solid #E6DFD2; padding-top:20px;">
+            <h4 style="font-size:1.05rem; color:#173B64; margin-bottom:8px;">Report Live Crowd on Your Bus</h4>
+            <p style="font-size:0.85rem; color:#77808C; margin-bottom:12px;">Help fellow Bengaluru commuters with real-time feedback.</p>
+            
+            <div class="form-group">
+              <label class="form-label" for="reportCrowdLevelSelect">Observed Occupancy</label>
+              <select id="reportCrowdLevelSelect" class="form-select">
+                <option value="Low">Low (Plenty of empty seats)</option>
+                <option value="Moderate">Moderate (Few seats, comfortable standing)</option>
+                <option value="High">High (Crowded, standing room only)</option>
+                <option value="Full">Critical / Full (Difficult to board)</option>
+              </select>
+            </div>
+
+            <button id="submitCrowdReportBtn" class="btn-outline" style="width:100%;" type="button">
+              Submit Live Commuter Report 📢
+            </button>
+          </div>
+        </div>
+
+        <!-- Crowd Meter Display -->
+        <div class="card-panel" style="text-align:center; padding:40px;">
+          <div style="display:flex; justify-content:center; gap:10px; margin-bottom:12px;">
+            <span id="crowdPeriodBadge" class="badge badge-ordinary">Regular Service</span>
+            <span class="badge" style="background:#EBF5FB; color:#2471A3;">Diurnal Peak Model</span>
+          </div>
+
+          <div id="crowdIndexDial" class="crowd-dial" style="background:#F57C00;">58</div>
+          
+          <h3 id="crowdStatusText" style="font-size:1.6rem; color:#202B38; margin:12px 0 6px;">Comfortable / Standing Space Available</h3>
+          <p id="crowdAdviceText" style="color:#77808C; font-size:1rem; max-width:480px; margin:0 auto 20px;">
+            Moderate occupancy on this corridor. A few vacant seats and ample comfortable standing space.
+          </p>
+
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; max-width:480px; margin:0 auto; text-align:left; background:#FAF8F5; padding:14px; border-radius:8px; border:1px solid #E6DFD2;">
+            <div>
+              <div style="font-size:0.75rem; color:#77808C;">PEAK FACTOR</div>
+              <div style="font-weight:700; color:#173B64;">1.05x Normal</div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:#77808C;">BOARDING PROBABILITY</div>
+              <div style="font-weight:700; color:#2E7D32;">96% High</div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:#77808C;">NEXT BUS IN</div>
+              <div style="font-weight:700; color:#173B64;">~4 mins</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODULE 4: SMART SERVICE ALERTS
+         ========================================== -->
+    <section id="tabAlerts" class="tab-panel" style="display:none;">
+      <div style="max-width:880px; margin:0 auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <div>
+            <h3 style="font-size:1.6rem; color:#173B64; margin-bottom:4px;">Smart Transit Service Alerts</h3>
+            <p style="color:#77808C; font-size:0.92rem;">Real-time infrastructure notices, metro road diversions, and weather warnings.</p>
+          </div>
+          <span class="badge badge-alert">Live Network Feed</span>
+        </div>
+
+        <div id="alertsListContainer">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODULE 5: COMPLAINT BOX & GRIEVANCES
+         ========================================== -->
+    <section id="tabComplaints" class="tab-panel" style="display:none;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
+        
+        <!-- File Grievance Form -->
+        <div class="card-panel">
+          <h3 style="font-size:1.4rem; color:#173B64; margin-bottom:6px;">Lodge Commuter Grievance</h3>
+          <p style="font-size:0.88rem; color:#77808C; margin-bottom:18px;">BMTC Grievance Redressal Cell guarantees review within 48 hours.</p>
+
+          <form id="fileGrievanceForm">
+            <div class="form-group">
+              <label class="form-label" for="cmpName">Full Name</label>
+              <input type="text" id="cmpName" class="form-input" placeholder="e.g. Anand Kumar" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cmpContact">Mobile Number or Email</label>
+              <input type="text" id="cmpContact" class="form-input" placeholder="e.g. 9845012345" required />
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <div class="form-group">
+                <label class="form-label" for="cmpService">Service Category</label>
+                <select id="cmpService" class="form-select">
+                  <option value="Ordinary">Ordinary Service</option>
+                  <option value="Vajra">AC Volvo Vajra</option>
+                  <option value="Vayu Vajra">Vayu Vajra Airport</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cmpRoute">Route Number</label>
+                <input type="text" id="cmpRoute" class="form-input" placeholder="e.g. 500-D" />
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <div class="form-group">
+                <label class="form-label" for="cmpBusNo">Bus Registration No (Optional)</label>
+                <input type="text" id="cmpBusNo" class="form-input" placeholder="e.g. KA-57-F-1234" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cmpCategory">Grievance Category</label>
+                <select id="cmpCategory" class="form-select">
+                  <option value="Delay / Scheduling">Delay / Late Running</option>
+                  <option value="Staff Behavior">Conductor / Driver Conduct</option>
+                  <option value="Skipped Stop">Bus Skipped Bus Stop</option>
+                  <option value="AC Maintenance">AC Not Cooling (Volvo)</option>
+                  <option value="Ticketing Issue">Overcharging / Ticket Issue</option>
+                  <option value="Safety / Rash Driving">Rash Driving / Safety</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cmpDescription">Grievance Description</label>
+              <textarea id="cmpDescription" class="form-textarea" rows="4" placeholder="Provide stop location, timing, and details..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%;">
+              Submit Grievance Ticket →
+            </button>
+          </form>
+
+          <div id="cmpSuccessBox" class="alert-strip" style="display:none; margin-top:16px; background:#E8F5E9; border-left-color:#2E7D32; color:#1B5E20;">
+            <div>
+              <b>Grievance Registered Successfully!</b>
+              <div style="font-size:0.9rem; margin-top:4px;">Reference Ticket: <code id="cmpTicketIdDisplay" style="font-weight:700;"></code></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track Grievance Status -->
+        <div class="card-panel">
+          <h3 style="font-size:1.4rem; color:#173B64; margin-bottom:6px;">Track Grievance Status</h3>
+          <p style="font-size:0.88rem; color:#77808C; margin-bottom:18px;">Enter your ticket reference number to verify review status.</p>
+
+          <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <input type="text" id="trackTicketInput" class="form-input" placeholder="e.g. BMTC-CMP-202611-AB123" />
+            <button id="trackTicketBtn" class="btn-outline" type="button">Track</button>
+          </div>
+
+          <div id="trackStatusResult">
+            <p style="color:#77808C; font-size:0.9rem;">No ticket entered. Type a reference ID above to query live status.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Digital m-Ticket Modal -->
+  <div id="ticketModal" class="modal-backdrop">
+    <div class="modal-box">
+      <button id="closeTicketModalBtn" class="modal-close-btn" type="button">✕</button>
+      <div id="ticketModalContent"></div>
+    </div>
+  </div>
+
+  <footer class="sanchara-footer">
+    <p>SANCHARA • BMTC Open Commuter Transit Guidance System • Built for Bengaluru Citizens & Travelers</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="js/bus-animator.js"></script>
+  <script src="js/map-controller.js"></script>
+  <script src="js/dashboard-app.js"></script>
+
+  <!-- Toggle Switch Bus Animation Handler -->
+  <script>
+    document.getElementById('toggleOrdBtn')?.addEventListener('click', () => {
+      window.BusAnimator.navigateWithBus('dashboard.html?service=ordinary', 'BMTC ORDINARY', 'Switching to City Bus Fleet', false, 'ordinary');
+    });
+    document.getElementById('toggleVajBtn')?.addEventListener('click', () => {
+      window.BusAnimator.navigateWithBus('dashboard.html?service=vajra', 'VAJRA AC VOLVO', 'Switching to AC Volvo Corridor', false, 'vajra');
+    });
+  </script>
+</body>
+</html>

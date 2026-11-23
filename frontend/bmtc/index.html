@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102B49">
+  <title>SANCHARA | BMTC Fleet Selection</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+  
+  <!-- Design System Stylesheets -->
+  <link rel="stylesheet" href="css/bmtc-common.css">
+  <link rel="stylesheet" href="css/service-selection.css">
+  <link rel="stylesheet" href="css/bus-animations.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="sanchara-header">
+    <a href="../" class="brand-group">
+      <span class="brand-logo-text">SANCHARA</span>
+      <span class="brand-section-badge">BMTC Section</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../" class="nav-link-btn">← Home</a>
+    </nav>
+  </header>
+
+  <!-- ============================================================
+       KARNATAKA HERITAGE BACKGROUND (Kolam / Rangoli Motif Layer)
+       Inspired by traditional South Indian Kolam loops in rich crimson
+       ============================================================ -->
+  <div class="page-heritage-decor" aria-hidden="true">
+    <!-- Top Center Heritage Kolam Mandala -->
+    <div class="heritage-top-kolam">
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg" class="kolam-svg-art">
+        <!-- Central Bindu Dots Grid -->
+        <g fill="#882232">
+          <circle cx="220" cy="35" r="4.5"/>
+          <circle cx="185" cy="70" r="4.5"/><circle cx="255" cy="70" r="4.5"/>
+          <circle cx="150" cy="105" r="4.5"/><circle cx="220" cy="105" r="4.5"/><circle cx="290" cy="105" r="4.5"/>
+          <circle cx="115" cy="140" r="4.5"/><circle cx="185" cy="140" r="4.5"/><circle cx="255" cy="140" r="4.5"/><circle cx="325" cy="140" r="4.5"/>
+          <circle cx="80" cy="175" r="4.5"/><circle cx="150" cy="175" r="4.5"/><circle cx="220" cy="175" r="4.5"/><circle cx="290" cy="175" r="4.5"/><circle cx="360" cy="175" r="4.5"/>
+          <circle cx="115" cy="210" r="4.5"/><circle cx="185" cy="210" r="4.5"/><circle cx="255" cy="210" r="4.5"/><circle cx="325" cy="210" r="4.5"/>
+          <circle cx="150" cy="245" r="4.5"/><circle cx="220" cy="245" r="4.5"/><circle cx="290" cy="245" r="4.5"/>
+          <circle cx="185" cy="280" r="4.5"/><circle cx="255" cy="280" r="4.5"/>
+          <circle cx="220" cy="315" r="4.5"/>
+          <circle cx="220" cy="10" r="4"/>
+          <circle cx="45" cy="175" r="4"/><circle cx="395" cy="175" r="4"/>
+          <circle cx="220" cy="345" r="4"/><circle cx="220" cy="370" r="3.5"/>
+        </g>
+        <!-- Interlaced Loops in Royal Crimson-Maroon -->
+        <g stroke="#882232" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 115,140 L 255,280"/>
+          <path d="M 80,175 L 220,315"/>
+          <path d="M 150,105 L 290,245"/>
+          <path d="M 185,70 L 325,210"/>
+
+          <path d="M 255,70 L 115,210"/>
+          <path d="M 290,105 L 150,245"/>
+          <path d="M 325,140 L 185,280"/>
+          <path d="M 360,175 L 220,315"/>
+
+          <!-- Perimeter Loops -->
+          <path d="M 185,70 C 170,45 190,18 220,18 C 250,18 270,45 255,70"/>
+          <path d="M 220,18 C 210,4 230,4 220,18"/>
+
+          <path d="M 150,105 C 120,80 90,110 115,140"/>
+          <path d="M 115,140 C 75,120 48,155 58,175 C 68,195 105,190 115,175"/>
+          <path d="M 115,210 C 85,235 115,265 150,245"/>
+
+          <path d="M 290,105 C 320,80 350,110 325,140"/>
+          <path d="M 325,140 C 365,120 392,155 382,175 C 372,195 335,190 325,175"/>
+          <path d="M 325,210 C 355,235 325,265 290,245"/>
+
+          <!-- Bottom Teardrop Pendant Loops -->
+          <path d="M 185,280 C 165,305 190,335 220,335 C 250,335 275,305 255,280"/>
+          <path d="M 205,330 C 190,352 215,368 220,358 C 225,368 250,352 235,330"/>
+          <path d="M 215,355 C 205,372 235,380 220,368"/>
+          <path d="M 220,368 C 225,380 235,372 225,355"/>
+
+          <!-- Inner woven arches -->
+          <path d="M 185,140 Q 220,105 255,140 Q 290,175 255,210 Q 220,245 185,210 Q 150,175 185,140 Z"/>
+          <path d="M 220,105 Q 255,70 290,105 Q 325,140 290,175 Q 255,210 220,175 Q 185,140 220,105 Z"/>
+          <path d="M 150,175 Q 185,140 220,175 Q 255,210 220,245 Q 185,280 150,245 Q 115,210 150,175 Z"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Corner Loops -->
+    <div class="heritage-corner-kolam corner-top-left">
+      <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#882232" stroke-width="3.5" fill="none">
+          <circle cx="35" cy="35" r="4" fill="#882232"/>
+          <circle cx="75" cy="35" r="4" fill="#882232"/>
+          <circle cx="35" cy="75" r="4" fill="#882232"/>
+          <path d="M 15,35 C 15,15 55,15 55,35 C 55,55 95,55 95,35"/>
+          <path d="M 35,15 C 55,15 55,55 35,55 C 15,55 15,95 35,95"/>
+          <path d="M 20,20 Q 55,55 90,20"/>
+        </g>
+      </svg>
+    </div>
+    <div class="heritage-corner-kolam corner-top-right">
+      <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#882232" stroke-width="3.5" fill="none">
+          <circle cx="35" cy="35" r="4" fill="#882232"/>
+          <circle cx="75" cy="35" r="4" fill="#882232"/>
+          <circle cx="35" cy="75" r="4" fill="#882232"/>
+          <path d="M 15,35 C 15,15 55,15 55,35 C 55,55 95,55 95,35"/>
+          <path d="M 35,15 C 55,15 55,55 35,55 C 15,55 15,95 35,95"/>
+          <path d="M 20,20 Q 55,55 90,20"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <main class="selection-screen">
+    
+    <!-- Split Layout: 2 Buses Parked Side-by-Side on LEFT | Independent Options on RIGHT -->
+    <div class="selection-split-layout">
+      
+      <!-- ========================================================
+           LEFT SIDE: TERMINAL APRON WITH 2 SIDE-BY-SIDE PARKED BUSES
+           ======================================================== -->
+      <section class="depot-terminal-apron" aria-label="BMTC Fleet Depot Bays">
+
+        <!-- Side-by-Side Buses Assembly (Clean stage, no box) -->
+        <div class="parking-bays-assembly">
+          
+          <!-- Bay 01: BMTC Ordinary Bus (Left Bay) — SVG inlined so CSS can animate .bus-wheel-group -->
+          <div id="busLaneOrdinary" class="bus-parking-lane lane-ordinary" title="Click to board BMTC Ordinary">
+            <div class="headlight-beam-overlay beam-ordinary"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 440" class="parked-bus-svg" role="img" aria-label="BMTC Ordinary City Bus 3/4 Front Perspective">
+              <defs>
+                <linearGradient id="ordFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%"   stop-color="#1E4B7A"/>
+                  <stop offset="40%"  stop-color="#173B64"/>
+                  <stop offset="100%" stop-color="#102B49"/>
+                </linearGradient>
+                <linearGradient id="ordSideGrad" x1="100%" y1="0%" x2="0%" y2="0%">
+                  <stop offset="0%"   stop-color="#102B49"/>
+                  <stop offset="60%"  stop-color="#143456"/>
+                  <stop offset="100%" stop-color="#173B64"/>
+                </linearGradient>
+                <linearGradient id="ordCreamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%"   stop-color="#FFF9EF"/>
+                  <stop offset="100%" stop-color="#F5EDDC"/>
+                </linearGradient>
+                <linearGradient id="ordGlassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%"   stop-color="#89BEDE" stop-opacity="0.85"/>
+                  <stop offset="30%"  stop-color="#5590B6" stop-opacity="0.75"/>
+                  <stop offset="70%"  stop-color="#316182" stop-opacity="0.85"/>
+                  <stop offset="100%" stop-color="#193B54" stop-opacity="0.95"/>
+                </linearGradient>
+                <linearGradient id="ordSideGlass" x1="100%" y1="0%" x2="0%" y2="0%">
+                  <stop offset="0%"   stop-color="#17354C" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#3B7396" stop-opacity="0.85"/>
+                </linearGradient>
+                <radialGradient id="ordHeadlightGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"   stop-color="#FFFCE0" stop-opacity="1"/>
+                  <stop offset="40%"  stop-color="#FFDD70" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#FFB800" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="busGroundShadow" x="-10%" y="-20%" width="120%" height="150%">
+                  <feGaussianBlur stdDeviation="9" result="blur"/>
+                  <feColorMatrix type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.1  0 0 0 0 0.18  0 0 0 0 0.45 0"/>
+                </filter>
+              </defs>
+              <polygon points="50,385 240,400 480,395 510,380 430,365 140,365" fill="#0A1828" filter="url(#busGroundShadow)"/>
+              <ellipse cx="320" cy="386" rx="160" ry="12" fill="#060F1A" opacity="0.6"/>
+              <g id="ordinaryBus3Q">
+                <polygon points="70,140 185,115 185,365 70,345" fill="url(#ordSideGrad)" stroke="#0D233A" stroke-width="2"/>
+                <polygon points="70,140 185,115 185,95 85,120"  fill="#1B426B"              stroke="#0D233A" stroke-width="1.5"/>
+                <polygon points="80,150 110,143 110,225 80,225"   fill="url(#ordSideGlass)" stroke="#0D233A" stroke-width="1.5"/>
+                <polygon points="115,142 145,135 145,225 115,225" fill="url(#ordSideGlass)" stroke="#0D233A" stroke-width="1.5"/>
+                <polygon points="150,134 180,127 180,225 150,225" fill="url(#ordSideGlass)" stroke="#0D233A" stroke-width="1.5"/>
+                <polygon points="70,235 185,235 185,265 70,260"  fill="url(#ordCreamGrad)"/>
+                <polygon points="70,260 185,265 185,270 70,265"  fill="#D43F52"/>
+                <text x="125" y="254" font-family="'Manrope',sans-serif" font-size="8" font-weight="800" fill="#173B64" letter-spacing="1">BMTC</text>
+                <!-- Rear Wheel Assembly (Perspective-locked tire + smooth rotating spoke disc) -->
+                <g class="bus-wheel-assembly">
+                  <!-- Outer rubber tire casing (stationary in perspective: no wobble) -->
+                  <ellipse cx="120" cy="345" rx="22" ry="34" fill="#12151B" stroke="#090B0E" stroke-width="2"/>
+                  <ellipse cx="120" cy="345" rx="18" ry="28" fill="#181D26"/>
+                  <!-- Rotating inner spoke disc (perspective foreshortened via scale(0.647, 1)) -->
+                  <g transform="translate(120, 345) scale(0.647, 1)">
+                    <g class="bus-wheel-spinner">
+                      <!-- Steel rim disc -->
+                      <circle cx="0" cy="0" r="23" fill="#718294" stroke="#4A5568" stroke-width="1.8"/>
+                      <circle cx="0" cy="0" r="18" fill="#5A6778"/>
+                      <!-- 6 ventilation / cooling rim slots -->
+                      <circle cx="0" cy="-12" r="3.2" fill="#12151B"/>
+                      <circle cx="10.4" cy="-6" r="3.2" fill="#12151B"/>
+                      <circle cx="10.4" cy="6" r="3.2" fill="#12151B"/>
+                      <circle cx="0" cy="12" r="3.2" fill="#12151B"/>
+                      <circle cx="-10.4" cy="6" r="3.2" fill="#12151B"/>
+                      <circle cx="-10.4" cy="-6" r="3.2" fill="#12151B"/>
+                      <!-- Radial steel spokes -->
+                      <line x1="0" y1="-18" x2="0" y2="18" stroke="#8FA2B4" stroke-width="2.2" stroke-linecap="round"/>
+                      <line x1="-18" y1="0" x2="18" y2="0" stroke="#8FA2B4" stroke-width="2.2" stroke-linecap="round"/>
+                      <line x1="-13" y1="-13" x2="13" y2="13" stroke="#8FA2B4" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="13" y1="-13" x2="-13" y2="13" stroke="#8FA2B4" stroke-width="2" stroke-linecap="round"/>
+                      <!-- Heavy BMTC central hub cap with lug bolts -->
+                      <circle cx="0" cy="0" r="9" fill="#173B64" stroke="#C5D5E5" stroke-width="1.2"/>
+                      <circle cx="0" cy="0" r="4.5" fill="#0D233A"/>
+                      <circle cx="0" cy="0" r="2" fill="#FFC107"/>
+                    </g>
+                  </g>
+                </g>
+                <!-- Roof & headsign -->
+                <path d="M 185,115 Q 185,85 220,78 L 430,78 Q 470,85 470,115 L 185,115 Z" fill="#204E7D" stroke="#0D233A" stroke-width="2"/>
+                <path d="M 270,72 L 390,72 L 385,62 L 275,62 Z" fill="#153658" stroke="#0D233A" stroke-width="1.5"/>
+                <rect x="220" y="88" width="220" height="42" rx="6" fill="#081018" stroke="#0D233A" stroke-width="2"/>
+                <rect x="226" y="94" width="208" height="30" rx="3" fill="#04090F"/>
+                <text x="330" y="114" font-family="'Courier New',monospace" font-size="16" font-weight="900" fill="#FFC107" text-anchor="middle" letter-spacing="2">201G • KBS MAJESTIC</text>
+                <rect x="232" y="98" width="40" height="22" rx="3" fill="#173B64"/>
+                <text x="252" y="114" font-family="'Courier New',monospace" font-size="12" font-weight="900" fill="#FFF" text-anchor="middle">201G</text>
+                <!-- Windshield -->
+                <path d="M 190,130 L 465,130 L 462,250 L 190,250 Z" fill="url(#ordGlassGrad)" stroke="#0D233A" stroke-width="2.5"/>
+                <line x1="326" y1="130" x2="326" y2="250" stroke="#0D233A" stroke-width="3"/>
+                <ellipse cx="250" cy="225" rx="20" ry="10" fill="#081420" opacity="0.7"/>
+                <line x1="250" y1="225" x2="250" y2="245" stroke="#081420" stroke-width="4"/>
+                <rect  x="235" y="235" width="40" height="15" rx="3" fill="#081420" opacity="0.6"/>
+                <rect  x="360" y="190" width="28" height="35" rx="4" fill="#081420" opacity="0.45"/>
+                <rect  x="410" y="190" width="28" height="35" rx="4" fill="#081420" opacity="0.45"/>
+                <line x1="240" y1="250" x2="285" y2="200" stroke="#0D233A" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="370" y1="250" x2="415" y2="200" stroke="#0D233A" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Lower fascia -->
+                <polygon points="185,250 468,250 464,340 185,345" fill="url(#ordFrontGrad)" stroke="#0D233A" stroke-width="2.5"/>
+                <polygon points="185,252 468,252 467,276 185,276" fill="url(#ordCreamGrad)" stroke="#E6DFD2" stroke-width="1"/>
+                <circle cx="326" cy="290" r="14" fill="#FFF9EF" stroke="#173B64" stroke-width="2"/>
+                <circle cx="326" cy="290" r="10" fill="#173B64"/>
+                <text x="326" y="294" font-family="'Manrope',sans-serif" font-size="8" font-weight="900" fill="#FFF" text-anchor="middle">BMTC</text>
+                <rect x="270" y="310" width="112" height="20" rx="3" fill="#0A1624" stroke="#0D233A" stroke-width="1.5"/>
+                <line x1="275" y1="315" x2="377" y2="315" stroke="#1B3856" stroke-width="1.5"/>
+                <line x1="275" y1="320" x2="377" y2="320" stroke="#1B3856" stroke-width="1.5"/>
+                <line x1="275" y1="325" x2="377" y2="325" stroke="#1B3856" stroke-width="1.5"/>
+                <!-- Headlights -->
+                <rect x="200" y="285" width="48" height="30" rx="5" fill="#081420" stroke="#0D233A" stroke-width="1.5"/>
+                <circle cx="216" cy="300" r="10" fill="url(#ordHeadlightGlow)" stroke="#FFF" stroke-width="1.5"/>
+                <circle cx="216" cy="300" r="4"  fill="#FFF"/>
+                <circle cx="236" cy="300" r="6"  fill="#FF8C00" stroke="#CC7000" stroke-width="1"/>
+                <rect x="404" y="285" width="48" height="30" rx="5" fill="#081420" stroke="#0D233A" stroke-width="1.5"/>
+                <circle cx="436" cy="300" r="10" fill="url(#ordHeadlightGlow)" stroke="#FFF" stroke-width="1.5"/>
+                <circle cx="436" cy="300" r="4"  fill="#FFF"/>
+                <circle cx="416" cy="300" r="6"  fill="#FF8C00" stroke="#CC7000" stroke-width="1"/>
+                <!-- Bumper -->
+                <polygon points="175,340 478,335 474,372 178,375" fill="#0A1828" stroke="#050C14" stroke-width="2.5"/>
+                <rect x="195" y="348" width="265" height="4" fill="#204060" opacity="0.6"/>
+                <ellipse cx="210" cy="360" rx="7" ry="5" fill="#FFEAA7" stroke="#333" stroke-width="1"/>
+                <ellipse cx="442" cy="358" rx="7" ry="5" fill="#FFEAA7" stroke="#333" stroke-width="1"/>
+                <rect x="280" y="346" width="94" height="20" rx="3" fill="#FFF" stroke="#222" stroke-width="1.5"/>
+                <rect x="282" y="348" width="10" height="16" fill="#003399"/>
+                <text x="287" y="359" font-family="'Manrope',sans-serif" font-size="6" font-weight="800" fill="#FFF" text-anchor="middle">IND</text>
+                <text x="337" y="360" font-family="'Courier New',monospace" font-size="10" font-weight="900" fill="#111" text-anchor="middle" letter-spacing="1">KA-01-F-1974</text>
+                <!-- Front Wheel Assembly (Perspective-locked tire + smooth rotating spoke disc) -->
+                <g class="bus-wheel-assembly">
+                  <ellipse cx="448" cy="370" rx="18" ry="24" fill="#12151B" stroke="#090B0E" stroke-width="2"/>
+                  <ellipse cx="448" cy="370" rx="14.5" ry="19.5" fill="#181D26"/>
+                  <g transform="translate(448, 370) scale(0.75, 1)">
+                    <g class="bus-wheel-spinner">
+                      <circle cx="0" cy="0" r="16" fill="#718294" stroke="#4A5568" stroke-width="1.5"/>
+                      <circle cx="0" cy="0" r="12.5" fill="#5A6778"/>
+                      <!-- Ventilation rim holes -->
+                      <circle cx="0" cy="-8.5" r="2.2" fill="#12151B"/>
+                      <circle cx="7.4" cy="-4.2" r="2.2" fill="#12151B"/>
+                      <circle cx="7.4" cy="4.2" r="2.2" fill="#12151B"/>
+                      <circle cx="0" cy="8.5" r="2.2" fill="#12151B"/>
+                      <circle cx="-7.4" cy="4.2" r="2.2" fill="#12151B"/>
+                      <circle cx="-7.4" cy="-4.2" r="2.2" fill="#12151B"/>
+                      <!-- Radial spokes -->
+                      <line x1="0" y1="-12.5" x2="0" y2="12.5" stroke="#8FA2B4" stroke-width="1.8" stroke-linecap="round"/>
+                      <line x1="-12.5" y1="0" x2="12.5" y2="0" stroke="#8FA2B4" stroke-width="1.8" stroke-linecap="round"/>
+                      <line x1="-9" y1="-9" x2="9" y2="9" stroke="#8FA2B4" stroke-width="1.5" stroke-linecap="round"/>
+                      <line x1="9" y1="-9" x2="-9" y2="9" stroke="#8FA2B4" stroke-width="1.5" stroke-linecap="round"/>
+                      <!-- Hub cap -->
+                      <circle cx="0" cy="0" r="6.5" fill="#173B64" stroke="#C5D5E5" stroke-width="1"/>
+                      <circle cx="0" cy="0" r="3" fill="#0D233A"/>
+                      <circle cx="0" cy="0" r="1.5" fill="#FFC107"/>
+                    </g>
+                  </g>
+                </g>
+                <!-- Mirrors -->
+                <path d="M 188,140 Q 155,135 150,155 L 150,185" fill="none" stroke="#0D233A" stroke-width="3" stroke-linecap="round"/>
+                <rect x="142" y="155" width="12" height="34" rx="4" fill="#0D233A"/>
+                <rect x="144" y="157" width="8"  height="30" rx="2" fill="#78A8C4"/>
+                <path d="M 466,140 Q 498,135 504,155 L 504,185" fill="none" stroke="#0D233A" stroke-width="3" stroke-linecap="round"/>
+                <rect x="498" y="155" width="12" height="34" rx="4" fill="#0D233A"/>
+                <rect x="500" y="157" width="8"  height="30" rx="2" fill="#78A8C4"/>
+              </g>
+            </svg>
+            <div class="bay-tag-badge">Bay 01 • Non-AC City Fleet</div>
+          </div>
+
+          <!-- Bay 02: AC Volvo / Vajra Bus (Right Bay) — SVG inlined so CSS can animate .bus-wheel-group -->
+          <div id="busLaneVajra" class="bus-parking-lane lane-vajra" title="Click to board AC Volvo Vajra">
+            <div class="headlight-beam-overlay beam-vajra"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 440" class="parked-bus-svg" role="img" aria-label="BMTC AC Volvo Vajra 3/4 Front Perspective">
+              <defs>
+                <linearGradient id="vajFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%"   stop-color="#16385D"/>
+                  <stop offset="35%"  stop-color="#102B49"/>
+                  <stop offset="70%"  stop-color="#0B1F35"/>
+                  <stop offset="100%" stop-color="#061322"/>
+                </linearGradient>
+                <linearGradient id="vajSideGrad" x1="100%" y1="0%" x2="0%" y2="0%">
+                  <stop offset="0%"   stop-color="#081728"/>
+                  <stop offset="50%"  stop-color="#0E243E"/>
+                  <stop offset="100%" stop-color="#122E4D"/>
+                </linearGradient>
+                <linearGradient id="vajRoofGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%"   stop-color="#234E7A"/>
+                  <stop offset="100%" stop-color="#0F2844"/>
+                </linearGradient>
+                <linearGradient id="vajGlassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%"   stop-color="#5692B8" stop-opacity="0.9"/>
+                  <stop offset="30%"  stop-color="#2D6284" stop-opacity="0.85"/>
+                  <stop offset="70%"  stop-color="#183E58" stop-opacity="0.92"/>
+                  <stop offset="100%" stop-color="#0B1E2E" stop-opacity="0.98"/>
+                </linearGradient>
+                <linearGradient id="vajSideGlass" x1="100%" y1="0%" x2="0%" y2="0%">
+                  <stop offset="0%"   stop-color="#0A1826" stop-opacity="0.96"/>
+                  <stop offset="100%" stop-color="#1C405C" stop-opacity="0.9"/>
+                </linearGradient>
+                <radialGradient id="vajXenonGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"   stop-color="#FFFFFF"  stop-opacity="1"/>
+                  <stop offset="45%"  stop-color="#60E8FF"  stop-opacity="0.85"/>
+                  <stop offset="100%" stop-color="#00A2C7"  stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="vajCoralTrim" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stop-color="#D43F52"/>
+                  <stop offset="50%"  stop-color="#FF6B81"/>
+                  <stop offset="100%" stop-color="#B8283B"/>
+                </linearGradient>
+                <filter id="busGroundShadowVaj" x="-10%" y="-20%" width="120%" height="150%">
+                  <feGaussianBlur stdDeviation="9" result="blur"/>
+                  <feColorMatrix type="matrix" values="0 0 0 0 0.03  0 0 0 0 0.08  0 0 0 0 0.15  0 0 0 0 0.5 0"/>
+                </filter>
+              </defs>
+              <polygon points="50,385 240,400 480,395 510,380 430,365 140,365" fill="#06101C" filter="url(#busGroundShadowVaj)"/>
+              <ellipse cx="320" cy="386" rx="160" ry="12" fill="#040A12" opacity="0.7"/>
+              <g id="vajraBus3Q">
+                <polygon points="70,135 185,110 185,365 70,345"  fill="url(#vajSideGrad)" stroke="#06121E" stroke-width="2"/>
+                <polygon points="70,135 185,110 185,85 75,112"   fill="#143454"            stroke="#06121E" stroke-width="1.5"/>
+                <polygon points="78,142 180,120 180,225 78,225"  fill="url(#vajSideGlass)" stroke="#06121E" stroke-width="1.5"/>
+                <line x1="110" y1="135" x2="110" y2="225" stroke="#071320" stroke-width="2"/>
+                <line x1="145" y1="128" x2="145" y2="225" stroke="#071320" stroke-width="2"/>
+                <polygon points="70,230 185,230 185,245 70,242" fill="url(#vajCoralTrim)"/>
+                <line x1="70" y1="247" x2="185" y2="247" stroke="#00E5FF" stroke-width="1.5" opacity="0.8"/>
+                <text x="125" y="262" font-family="'Manrope',sans-serif" font-size="9" font-weight="900" fill="#FFF" letter-spacing="2">VAJRA</text>
+                <!-- Vajra Rear Wheel Assembly (Perspective-locked tire + alloy spoke disc) -->
+                <g class="bus-wheel-assembly">
+                  <ellipse cx="120" cy="345" rx="22" ry="34" fill="#0C0E12" stroke="#040608" stroke-width="2"/>
+                  <ellipse cx="120" cy="345" rx="18" ry="28" fill="#141820"/>
+                  <g transform="translate(120, 345) scale(0.647, 1)">
+                    <g class="bus-wheel-spinner">
+                      <!-- Machined alloy rim -->
+                      <circle cx="0" cy="0" r="23" fill="#8FA2B4" stroke="#48596B" stroke-width="1.8"/>
+                      <circle cx="0" cy="0" r="18" fill="#687888"/>
+                      <!-- Volvo ventilation spoke cutouts -->
+                      <circle cx="0" cy="-12" r="3.2" fill="#0C0E12"/>
+                      <circle cx="10.4" cy="-6" r="3.2" fill="#0C0E12"/>
+                      <circle cx="10.4" cy="6" r="3.2" fill="#0C0E12"/>
+                      <circle cx="0" cy="12" r="3.2" fill="#0C0E12"/>
+                      <circle cx="-10.4" cy="6" r="3.2" fill="#0C0E12"/>
+                      <circle cx="-10.4" cy="-6" r="3.2" fill="#0C0E12"/>
+                      <!-- Alloy spokes -->
+                      <line x1="0" y1="-18" x2="0" y2="18" stroke="#CFD9E3" stroke-width="2.4" stroke-linecap="round"/>
+                      <line x1="-18" y1="0" x2="18" y2="0" stroke="#CFD9E3" stroke-width="2.4" stroke-linecap="round"/>
+                      <line x1="-13" y1="-13" x2="13" y2="13" stroke="#B0C2D2" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="13" y1="-13" x2="-13" y2="13" stroke="#B0C2D2" stroke-width="2" stroke-linecap="round"/>
+                      <!-- Center Hub (Volvo Coral Trim) -->
+                      <circle cx="0" cy="0" r="9" fill="#102B49" stroke="#00E5FF" stroke-width="1.2"/>
+                      <circle cx="0" cy="0" r="5" fill="#D43F52"/>
+                      <circle cx="0" cy="0" r="2" fill="#FFF"/>
+                    </g>
+                  </g>
+                </g>
+                <!-- Roof & headsign -->
+                <path d="M 185,110 Q 185,75 225,66 L 425,66 Q 470,75 470,110 L 185,110 Z" fill="url(#vajRoofGrad)" stroke="#071524" stroke-width="2"/>
+                <path d="M 240,62 Q 250,48 280,48 L 380,48 Q 410,48 420,62 Z" fill="#0D243A" stroke="#071524" stroke-width="1.5"/>
+                <line x1="285" y1="53" x2="375" y2="53" stroke="#2D5C88" stroke-width="1.5"/>
+                <line x1="290" y1="57" x2="370" y2="57" stroke="#2D5C88" stroke-width="1.5"/>
+                <rect x="220" y="80" width="220" height="42" rx="6" fill="#040A12" stroke="#071524" stroke-width="2"/>
+                <rect x="226" y="86" width="208" height="30" rx="3" fill="#02050A"/>
+                <text x="330" y="106" font-family="'Courier New',monospace" font-size="15" font-weight="900" fill="#FFA500" text-anchor="middle" letter-spacing="2">V-500D • KIA AIRPORT</text>
+                <rect x="232" y="90" width="45" height="22" rx="3" fill="#D43F52"/>
+                <text x="254.5" y="105" font-family="'Courier New',monospace" font-size="10" font-weight="900" fill="#FFF" text-anchor="middle">VAJRA</text>
+                <!-- Windshield -->
+                <path d="M 190,122 L 465,122 L 462,252 L 190,252 Z" fill="url(#vajGlassGrad)" stroke="#071524" stroke-width="2.5"/>
+                <ellipse cx="250" cy="226" rx="22" ry="11" fill="#040B12" opacity="0.8"/>
+                <line x1="250" y1="226" x2="250" y2="246" stroke="#040B12" stroke-width="4"/>
+                <rect x="235" y="235" width="30" height="6" rx="1" fill="#00E5FF" opacity="0.7"/>
+                <rect x="360" y="185" width="26" height="40" rx="4" fill="#040B12" opacity="0.5"/>
+                <rect x="410" y="185" width="26" height="40" rx="4" fill="#040B12" opacity="0.5"/>
+                <line x1="240" y1="252" x2="295" y2="195" stroke="#071524" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="370" y1="252" x2="425" y2="195" stroke="#071524" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Lower fascia -->
+                <polygon points="185,252 468,252 464,342 185,347"  fill="url(#vajFrontGrad)"  stroke="#071524" stroke-width="2.5"/>
+                <polygon points="185,254 468,254 467,266 185,266"  fill="url(#vajCoralTrim)"/>
+                <line x1="185" y1="268" x2="467" y2="268" stroke="#00E5FF" stroke-width="1.5" opacity="0.8"/>
+                <circle cx="326" cy="288" r="14" fill="#102B49" stroke="#E6DFD2" stroke-width="2"/>
+                <line x1="316" y1="298" x2="336" y2="278" stroke="#E6DFD2" stroke-width="2.5"/>
+                <text x="326" y="292" font-family="'Manrope',sans-serif" font-size="7" font-weight="900" fill="#FFF" text-anchor="middle" letter-spacing="1">VOLVO</text>
+                <rect x="265" y="308" width="122" height="22" rx="4" fill="#040B12" stroke="#071524" stroke-width="1.5"/>
+                <line x1="270" y1="314" x2="382" y2="314" stroke="#143454" stroke-width="1.5"/>
+                <line x1="270" y1="319" x2="382" y2="319" stroke="#143454" stroke-width="1.5"/>
+                <line x1="270" y1="324" x2="382" y2="324" stroke="#143454" stroke-width="1.5"/>
+                <!-- Headlights -->
+                <rect x="198" y="282" width="50" height="34" rx="6" fill="#040C16" stroke="#071524" stroke-width="1.5"/>
+                <circle cx="215" cy="299" r="10" fill="url(#vajXenonGlow)" stroke="#00E5FF" stroke-width="1.5"/>
+                <circle cx="215" cy="299" r="4"  fill="#FFF"/>
+                <path d="M 202,286 L 244,286" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="238" cy="299" r="6"  fill="#FF8C00" stroke="#CC7000" stroke-width="1"/>
+                <rect x="404" y="282" width="50" height="34" rx="6" fill="#040C16" stroke="#071524" stroke-width="1.5"/>
+                <circle cx="437" cy="299" r="10" fill="url(#vajXenonGlow)" stroke="#00E5FF" stroke-width="1.5"/>
+                <circle cx="437" cy="299" r="4"  fill="#FFF"/>
+                <path d="M 408,286 L 450,286" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="414" cy="299" r="6"  fill="#FF8C00" stroke="#CC7000" stroke-width="1"/>
+                <!-- Bumper -->
+                <polygon points="175,342 478,337 474,374 178,377" fill="#040A12" stroke="#02060A" stroke-width="2.5"/>
+                <rect x="195" y="350" width="265" height="3" fill="#00E5FF" opacity="0.7"/>
+                <ellipse cx="210" cy="362" rx="8" ry="4" fill="#00E5FF" stroke="#040A12" stroke-width="1"/>
+                <ellipse cx="442" cy="360" rx="8" ry="4" fill="#00E5FF" stroke="#040A12" stroke-width="1"/>
+                <rect x="280" y="348" width="94" height="20" rx="3" fill="#FFF" stroke="#111" stroke-width="1.5"/>
+                <rect x="282" y="350" width="10" height="16" fill="#003399"/>
+                <text x="287" y="361" font-family="'Manrope',sans-serif" font-size="6" font-weight="800" fill="#FFF" text-anchor="middle">IND</text>
+                <text x="337" y="362" font-family="'Courier New',monospace" font-size="10" font-weight="900" fill="#111" text-anchor="middle" letter-spacing="1">KA-57-F-2024</text>
+                <!-- Vajra Front Wheel Assembly -->
+                <g class="bus-wheel-assembly">
+                  <ellipse cx="448" cy="372" rx="18" ry="24" fill="#0C0E12" stroke="#040608" stroke-width="2"/>
+                  <ellipse cx="448" cy="372" rx="14.5" ry="19.5" fill="#141820"/>
+                  <g transform="translate(448, 372) scale(0.75, 1)">
+                    <g class="bus-wheel-spinner">
+                      <circle cx="0" cy="0" r="16" fill="#8FA2B4" stroke="#48596B" stroke-width="1.5"/>
+                      <circle cx="0" cy="0" r="12.5" fill="#687888"/>
+                      <!-- Spoke vents -->
+                      <circle cx="0" cy="-8.5" r="2.2" fill="#0C0E12"/>
+                      <circle cx="7.4" cy="-4.2" r="2.2" fill="#0C0E12"/>
+                      <circle cx="7.4" cy="4.2" r="2.2" fill="#0C0E12"/>
+                      <circle cx="0" cy="8.5" r="2.2" fill="#0C0E12"/>
+                      <circle cx="-7.4" cy="4.2" r="2.2" fill="#0C0E12"/>
+                      <circle cx="-7.4" cy="-4.2" r="2.2" fill="#0C0E12"/>
+                      <!-- Radial alloy spokes -->
+                      <line x1="0" y1="-12.5" x2="0" y2="12.5" stroke="#CFD9E3" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="-12.5" y1="0" x2="12.5" y2="0" stroke="#CFD9E3" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="-9" y1="-9" x2="9" y2="9" stroke="#B0C2D2" stroke-width="1.5" stroke-linecap="round"/>
+                      <line x1="9" y1="-9" x2="-9" y2="9" stroke="#B0C2D2" stroke-width="1.5" stroke-linecap="round"/>
+                      <!-- Hub cap with Volvo Coral trim -->
+                      <circle cx="0" cy="0" r="6.5" fill="#102B49" stroke="#00E5FF" stroke-width="1"/>
+                      <circle cx="0" cy="0" r="3.5" fill="#D43F52"/>
+                      <circle cx="0" cy="0" r="1.5" fill="#FFF"/>
+                    </g>
+                  </g>
+                </g>
+                <!-- Mirrors -->
+                <path d="M 188,135 Q 145,118 140,150 L 140,185" fill="none" stroke="#071524" stroke-width="3.5" stroke-linecap="round"/>
+                <rect x="132" y="150" width="14" height="36" rx="5" fill="#071524"/>
+                <rect x="134" y="152" width="10" height="32" rx="3" fill="#205074"/>
+                <path d="M 466,135 Q 508,118 514,150 L 514,185" fill="none" stroke="#071524" stroke-width="3.5" stroke-linecap="round"/>
+                <rect x="508" y="150" width="14" height="36" rx="5" fill="#071524"/>
+                <rect x="510" y="152" width="10" height="32" rx="3" fill="#205074"/>
+              </g>
+            </svg>
+            <div class="bay-tag-badge bay-tag-vajra">Bay 02 • Volvo Vajra AC</div>
+          </div>
+
+        </div>
+
+        </section>
+
+      <!-- ========================================================
+           RIGHT SIDE: INDEPENDENT SERVICE SELECTION AREA
+           ======================================================== -->
+      <section class="service-selection-panel" aria-label="Service Selection Options">
+        
+        <div class="selection-intro-heading">
+          <h1>Select Your BMTC Fleet</h1>
+          <p>Choose between the extensive citywide non-AC network or the climate-controlled AC Volvo Vajra express corridor.</p>
+        </div>
+
+        <!-- Option 1: ORDINARY BMTC Card & Button -->
+        <div id="cardOrdinary" class="service-option-card">
+          <div class="option-badge-row">
+            <span class="badge badge-ordinary">Non-AC City Fleet</span>
+            <span style="font-size:0.8rem; font-weight:700; color:var(--navy);">7,941 Verified Routes</span>
+          </div>
+
+          <div>
+            <h2 class="service-title-text">BMTC Ordinary Services</h2>
+            <p class="service-subtitle-text">
+              The daily lifeline of Bengaluru, providing extensive coverage connecting all residential layouts, suburban hubs, markets, and colleges.
+            </p>
+          </div>
+
+          <div class="service-specs-row">
+            <span class="spec-pill">Fares from ₹5</span>
+            <span class="spec-pill">Daily Pass ₹70</span>
+            <span class="spec-pill">Student & Senior Passes</span>
+            <span class="spec-pill">Max Frequency</span>
+          </div>
+
+          <!-- Independent Action Button for Ordinary BMTC -->
+          <button id="btnOrdinary" class="btn-service-action btn-ordinary-fleet" type="button">
+            <span>Select Ordinary BMTC</span>
+            <span class="btn-arrow-glyph">→</span>
+          </button>
+        </div>
+
+        <!-- Option 2: AC VOLVO / VAJRA Card & Button -->
+        <div id="cardVajra" class="service-option-card card-vajra">
+          <div class="option-badge-row">
+            <span class="badge badge-vajra">Climate-Controlled Luxury</span>
+            <span class="badge badge-vayu">KIA Airport Express</span>
+          </div>
+
+          <div>
+            <h2 class="service-title-text">AC Volvo / Vajra Services</h2>
+            <p class="service-subtitle-text">
+              Premium air-conditioned low-floor coaches operating on high-demand IT corridors (Outer Ring Road, Electronic City, Whitefield) and 24/7 dedicated airport routes.
+            </p>
+          </div>
+
+          <div class="service-specs-row">
+            <span class="spec-pill">AC Climate Comfort</span>
+            <span class="spec-pill">Vajra Gold Pass ₹120</span>
+            <span class="spec-pill">Direct KIA Airport Lines</span>
+            <span class="spec-pill">Low-Floor Access</span>
+          </div>
+
+          <!-- Independent Action Button for AC Volvo -->
+          <button id="btnVajra" class="btn-service-action btn-vajra-fleet" type="button">
+            <span>Select AC Volvo / Vajra</span>
+            <span class="btn-arrow-glyph">→</span>
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       TRADITIONAL KARNATAKA PALACE / SAREE BORDER STRIP
+       Running continuously across the page bottom (matching reference art)
+       ============================================================ -->
+  <div class="heritage-bottom-border-strip" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="96" class="heritage-border-svg" preserveAspectRatio="none">
+      <defs>
+        <pattern id="karnatakaPalaceBorder" width="160" height="96" patternUnits="userSpaceOnUse">
+          <!-- Deep Royal Maroon Base Band -->
+          <rect width="160" height="96" fill="#721E29"/>
+
+          <!-- 1. Top Lotus Petal / Temple Crest Dentils -->
+          <g fill="#FBF6EE">
+            <polygon points="0,7 4,0 8,7 12,0 16,7 20,0 24,7 28,0 32,7 36,0 40,7 44,0 48,7 52,0 56,7 60,0 64,7 68,0 72,7 76,0 80,7 84,0 88,7 92,0 96,7 100,0 104,7 108,0 112,7 116,0 120,7 124,0 128,7 132,0 136,7 140,0 144,7 148,0 152,7 156,0 160,7"/>
+          </g>
+
+          <!-- 2. Pearl Beads Row -->
+          <g fill="#FBF6EE">
+            <circle cx="8" cy="12" r="1.8"/><circle cx="24" cy="12" r="1.8"/><circle cx="40" cy="12" r="1.8"/><circle cx="56" cy="12" r="1.8"/>
+            <circle cx="72" cy="12" r="1.8"/><circle cx="88" cy="12" r="1.8"/><circle cx="104" cy="12" r="1.8"/><circle cx="120" cy="12" r="1.8"/>
+            <circle cx="136" cy="12" r="1.8"/><circle cx="152" cy="12" r="1.8"/>
+          </g>
+
+          <!-- Gold rule lines -->
+          <line x1="0" y1="16" x2="160" y2="16" stroke="#E2C17D" stroke-width="1.2"/>
+          <line x1="0" y1="19" x2="160" y2="19" stroke="#FBF6EE" stroke-width="0.8"/>
+
+          <!-- 3. Geometric Temple Rosette Blocks -->
+          <g fill="#FBF6EE" stroke="#E2C17D" stroke-width="0.8">
+            <rect x="6" y="22" width="8" height="8" rx="1"/>
+            <rect x="26" y="22" width="8" height="8" rx="1"/>
+            <rect x="46" y="22" width="8" height="8" rx="1"/>
+            <rect x="66" y="22" width="8" height="8" rx="1"/>
+            <rect x="86" y="22" width="8" height="8" rx="1"/>
+            <rect x="106" y="22" width="8" height="8" rx="1"/>
+            <rect x="126" y="22" width="8" height="8" rx="1"/>
+            <rect x="146" y="22" width="8" height="8" rx="1"/>
+          </g>
+          <g fill="#721E29">
+            <circle cx="10" cy="26" r="1.8"/><circle cx="30" cy="26" r="1.8"/><circle cx="50" cy="26" r="1.8"/><circle cx="70" cy="26" r="1.8"/>
+            <circle cx="90" cy="26" r="1.8"/><circle cx="110" cy="26" r="1.8"/><circle cx="130" cy="26" r="1.8"/><circle cx="150" cy="26" r="1.8"/>
+          </g>
+
+          <!-- Divider rules -->
+          <line x1="0" y1="33" x2="160" y2="33" stroke="#E2C17D" stroke-width="1.5"/>
+          <line x1="0" y1="36" x2="160" y2="36" stroke="#FBF6EE" stroke-width="0.9"/>
+
+          <!-- 4. TRADITIONAL FLORAL CREEPER VINE (KODI / VALLARI MEANDER) -->
+          <path d="M 0,56 C 20,40 40,40 60,56 C 80,72 100,72 120,56 C 140,40 160,40 180,56"
+                fill="none" stroke="#E2C17D" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M 0,56 C 20,40 40,40 60,56 C 80,72 100,72 120,56 C 140,40 160,40 180,56"
+                fill="none" stroke="#FBF6EE" stroke-width="1.2" stroke-linecap="round"/>
+
+          <!-- 5-Petal Blossoms at crests and troughs -->
+          <g transform="translate(30, 42)">
+            <circle cx="0" cy="0" r="4.2" fill="#E2C17D"/>
+            <circle cx="0" cy="0" r="2.2" fill="#721E29"/>
+            <circle cx="0" cy="-6" r="2.5" fill="#FBF6EE"/>
+            <circle cx="5.7" cy="-1.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="3.5" cy="4.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="-3.5" cy="4.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="-5.7" cy="-1.8" r="2.5" fill="#FBF6EE"/>
+          </g>
+
+          <g transform="translate(90, 70)">
+            <circle cx="0" cy="0" r="4.2" fill="#E2C17D"/>
+            <circle cx="0" cy="0" r="2.2" fill="#721E29"/>
+            <circle cx="0" cy="-6" r="2.5" fill="#FBF6EE"/>
+            <circle cx="5.7" cy="-1.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="3.5" cy="4.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="-3.5" cy="4.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="-5.7" cy="-1.8" r="2.5" fill="#FBF6EE"/>
+          </g>
+
+          <g transform="translate(150, 42)">
+            <circle cx="0" cy="0" r="4.2" fill="#E2C17D"/>
+            <circle cx="0" cy="0" r="2.2" fill="#721E29"/>
+            <circle cx="0" cy="-6" r="2.5" fill="#FBF6EE"/>
+            <circle cx="5.7" cy="-1.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="3.5" cy="4.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="-3.5" cy="4.8" r="2.5" fill="#FBF6EE"/>
+            <circle cx="-5.7" cy="-1.8" r="2.5" fill="#FBF6EE"/>
+          </g>
+
+          <!-- Delicate Leaf Sprigs and Tendrils -->
+          <g fill="#E2C17D">
+            <path d="M 12,50 Q 8,43 14,41 Q 18,46 12,50 Z"/>
+            <path d="M 48,50 Q 52,43 46,41 Q 42,46 48,50 Z"/>
+            <path d="M 72,62 Q 68,69 74,71 Q 78,66 72,62 Z"/>
+            <path d="M 108,62 Q 112,69 106,71 Q 102,66 108,62 Z"/>
+            <path d="M 132,50 Q 128,43 134,41 Q 138,46 132,50 Z"/>
+          </g>
+          <g fill="#FBF6EE">
+            <circle cx="6" cy="62" r="1.5"/><circle cx="18" cy="60" r="1.5"/>
+            <circle cx="66" cy="50" r="1.5"/><circle cx="78" cy="52" r="1.5"/>
+            <circle cx="126" cy="62" r="1.5"/><circle cx="138" cy="60" r="1.5"/>
+          </g>
+
+          <!-- 5. Lower Separator Rules -->
+          <line x1="0" y1="78" x2="160" y2="78" stroke="#FBF6EE" stroke-width="1"/>
+          <line x1="0" y1="81" x2="160" y2="81" stroke="#E2C17D" stroke-width="1.5"/>
+
+          <!-- 6. Bottom Diamond Lattice Band -->
+          <path d="M 0,88 L 10,83 L 20,88 L 30,83 L 40,88 L 50,83 L 60,88 L 70,83 L 80,88 L 90,83 L 100,88 L 110,83 L 120,88 L 130,83 L 140,88 L 150,83 L 160,88 L 150,93 L 140,88 L 130,93 L 120,88 L 110,93 L 100,88 L 90,93 L 80,88 L 70,93 L 60,88 L 50,93 L 40,88 L 30,93 L 20,88 L 10,93 Z"
+                fill="none" stroke="#FBF6EE" stroke-width="1.2"/>
+          <line x1="0" y1="95" x2="160" y2="95" stroke="#E2C17D" stroke-width="1.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="96" fill="url(#karnatakaPalaceBorder)"/>
+    </svg>
+  </div>
+
+  <footer class="sanchara-footer">
+    <p>SANCHARA • Government of Karnataka & BMTC Open Transit Network Engine • Bengaluru</p>
+  </footer>
+
+  <!-- Bus Animator must load before Service Selection so departure overlay works -->
+  <script src="js/bus-animator.js"></script>
+  <script src="js/service-selection.js"></script>
+</body>
+</html>

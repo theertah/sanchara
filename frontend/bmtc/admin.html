@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102B49">
+  <title>SANCHARA | BMTC Admin Control Center</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+  <link rel="stylesheet" href="css/bmtc-common.css">
+  <link rel="stylesheet" href="css/bus-animations.css">
+  
+  <style>
+    .admin-container {
+      max-width: 1320px;
+      margin: 30px auto 60px;
+      padding: 0 24px;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+    .metric-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .metric-val {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-top: 4px;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .data-table th, .data-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table th {
+      background: var(--warm-cream);
+      font-weight: 700;
+      color: var(--deep-navy);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="sanchara-header">
+    <a href="../" class="brand-group">
+      <span class="brand-logo-text">SANCHARA</span>
+      <span class="brand-section-badge" style="background:#D97662; color:#FFF;">Admin Center</span>
+    </a>
+    <nav class="header-nav">
+      <a href="dashboard.html" class="nav-link-btn">← Public Dashboard</a>
+      <a href="./" class="nav-link-btn">Service Depot</a>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:2.4rem; color:#102B49;">BMTC Network Management & Operations</h1>
+      <p style="color:#77808C;">Monitor transport network health, broadcast live commuter alerts, and manage grievance resolution.</p>
+    </div>
+
+    <!-- Live Metrics Grid -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <span style="font-size:0.78rem; font-weight:700; color:#77808C;">TOTAL STOPS</span>
+        <div id="metricStops" class="metric-val">10,128</div>
+        <span style="font-size:0.75rem; color:#2E7D32;">7,964 geocoded inside Bengaluru</span>
+      </div>
+      <div class="metric-card">
+        <span style="font-size:0.78rem; font-weight:700; color:#77808C;">ACTIVE BUS ROUTES</span>
+        <div id="metricRoutes" class="metric-val">8,428</div>
+        <span style="font-size:0.75rem; color:#173B64;">4,895 unique route corridor lines</span>
+      </div>
+      <div class="metric-card">
+        <span style="font-size:0.78rem; font-weight:700; color:#77808C;">GRAPH EDGES</span>
+        <div id="metricEdges" class="metric-val">245,645</div>
+        <span style="font-size:0.75rem; color:#2471A3;">Dijkstra multi-modal network</span>
+      </div>
+      <div class="metric-card">
+        <span style="font-size:0.78rem; font-weight:700; color:#77808C;">PENDING GRIEVANCES</span>
+        <div id="metricComplaints" class="metric-val" style="color:#D97662;">0</div>
+        <span style="font-size:0.75rem; color:#77808C;">Guaranteed 48hr SLA</span>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:440px 1fr; gap:28px;">
+      
+      <!-- Broadcast Service Alert Panel -->
+      <div class="card-panel">
+        <h3 style="font-size:1.35rem; color:#173B64; margin-bottom:14px;">Broadcast Service Alert</h3>
+        
+        <form id="broadcastAlertForm">
+          <div class="form-group">
+            <label class="form-label" for="alertTitle">Alert Title</label>
+            <input type="text" id="alertTitle" class="form-input" placeholder="e.g. Metro Construction Diversion" required />
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="form-group">
+              <label class="form-label" for="alertCategory">Category</label>
+              <select id="alertCategory" class="form-select">
+                <option value="Metro Construction">Metro Construction</option>
+                <option value="Weather">Weather / Flooding</option>
+                <option value="Road Maintenance">Road Maintenance</option>
+                <option value="VIP Movement">VIP Movement</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="alertSeverity">Severity</label>
+              <select id="alertSeverity" class="form-select">
+                <option value="Moderate">Moderate</option>
+                <option value="High">High</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="alertRoutes">Affected Routes (comma separated)</label>
+            <input type="text" id="alertRoutes" class="form-input" placeholder="e.g. 500-D, 365, KIA-14" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="alertMessage">Public Commuter Notice</label>
+            <textarea id="alertMessage" class="form-textarea" rows="3" placeholder="Provide detour details and delay estimates..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-coral" style="width:100%;">
+            Publish Live Alert 📢
+          </button>
+        </form>
+      </div>
+
+      <!-- Grievance Management Table -->
+      <div class="card-panel">
+        <h3 style="font-size:1.35rem; color:#173B64; margin-bottom:14px;">Recent Commuter Grievances</h3>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Commuter</th>
+                <th>Service</th>
+                <th>Route</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="complaintsTableBody">
+              <tr>
+                <td colspan="7" style="text-align:center; color:#77808C;">Loading grievance records...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="sanchara-footer">
+    <p>SANCHARA • BMTC Operational Control Center • Bengaluru</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAdminMetrics();
+      loadComplaintsTable();
+
+      document.getElementById('broadcastAlertForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const routes = document.getElementById('alertRoutes').value.split(',').map(s => s.trim());
+        const payload = {
+          title: document.getElementById('alertTitle').value,
+          category: document.getElementById('alertCategory').value,
+          severity: document.getElementById('alertSeverity').value,
+          message: document.getElementById('alertMessage').value,
+          affected_routes: routes,
+          active_from: new Date().toISOString().split('T')[0],
+          active_to: 'Notice'
+        };
+
+        try {
+          const resp = await fetch('/api/alerts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const res = await resp.json();
+          alert(res.message || "Alert published!");
+          document.getElementById('broadcastAlertForm').reset();
+        } catch (err) {
+          alert("Error publishing alert.");
+        }
+      });
+    });
+
+    async function loadAdminMetrics() {
+      try {
+        const resp = await fetch('/api/admin/metrics');
+        const res = await resp.json();
+        if (res.network) {
+          document.getElementById('metricStops').textContent = res.network.total_stops_records.toLocaleString();
+          document.getElementById('metricRoutes').textContent = res.network.total_route_records.toLocaleString();
+          document.getElementById('metricEdges').textContent = res.network.total_graph_edges.toLocaleString();
+        }
+        document.getElementById('metricComplaints').textContent = res.pending_complaints_count || 0;
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+
+    async function loadComplaintsTable() {
+      const tbody = document.getElementById('complaintsTableBody');
+      try {
+        const resp = await fetch('/api/complaints');
+        const items = await resp.json();
+
+        if (items.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#77808C;">No grievances recorded yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = items.map(c => `
+          <tr>
+            <td><code>${c.ticket_id}</code></td>
+            <td><b>${c.commuter_name}</b></td>
+            <td>${c.service_type}</td>
+            <td><b>${c.route_no}</b></td>
+            <td>${c.category}</td>
+            <td><span class="badge ${c.status === 'Resolved' ? 'badge-ordinary' : 'badge-alert'}">${c.status}</span></td>
+            <td>
+              ${c.status !== 'Resolved' ? 
+                `<button onclick="resolveComplaint('${c.ticket_id}')" style="background:#2E7D32; color:#FFF; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;">Resolve ✓</button>` 
+                : `<span style="color:#2E7D32; font-size:12px;">Closed</span>`}
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#C62828;">Failed to load grievances.</td></tr>';
+      }
+    }
+
+    window.resolveComplaint = async (ticketId) => {
+      try {
+        await fetch(`/api/complaints/${encodeURIComponent(ticketId)}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'Resolved' })
+        });
+        loadComplaintsTable();
+        loadAdminMetrics();
+      } catch (e) {
+        alert("Failed to update status.");
+      }
+    };
+  </script>
+</body>
+</html>

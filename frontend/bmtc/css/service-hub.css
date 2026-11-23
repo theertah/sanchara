@@ -1,0 +1,571 @@
+/* ==========================================================================
+   SANCHARA – Service Hub Page
+   The landing that appears after selecting Ordinary BMTC or AC Volvo / Vajra.
+   Layout: full-height hero with Bengaluru background, bus left, feature cards right.
+   Colour palette: Royal Blue (#102B49 / #173B64), Cream (#FAF5EB), Coral (#D43F52)
+   ========================================================================== */
+
+/* ── Reset & base ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --royal-blue:      #102B49;
+  --royal-blue-mid:  #173B64;
+  --royal-blue-light:#1F4E8A;
+  --royal-blue-pale: #EEF3FA;
+  --cream:           #FAF5EB;
+  --cream-warm:      #F4EDD9;
+  --cream-dark:      #E8DEC8;
+  --coral:           #D43F52;
+  --coral-hover:     #B8283B;
+  --coral-light:     #FCE8EB;
+  --coral-glow:      rgba(212, 63, 82, 0.35);
+  --gold:            #C9A84C;
+  --text-dark:       #102B49;
+  --text-mid:        #2D4A6B;
+  --text-muted:      #7D8FA3;
+  --white:           #FFFFFF;
+  --shadow-soft:     0 4px 24px rgba(16, 43, 73, 0.12);
+  --shadow-card:     0 8px 32px rgba(16, 43, 73, 0.16);
+  --radius-card:     16px;
+  --radius-btn:      10px;
+  --font-serif:      'Cormorant Garamond', Georgia, serif;
+  --font-sans:       'Manrope', system-ui, sans-serif;
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth:     cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-sans);
+  background: var(--royal-blue);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* ── Top navigation header ─────────────────────────────────────────────── */
+.hub-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(16, 43, 73, 0.92);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.hub-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.hub-brand-logo {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.08em;
+}
+
+.hub-brand-badge {
+  background: var(--coral);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* Dynamic service label (center) */
+.hub-service-label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cream);
+}
+
+.hub-service-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  background: rgba(212, 63, 82, 0.2);
+  border: 1px solid rgba(212, 63, 82, 0.4);
+}
+
+.hub-service-name {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+}
+
+/* Go back button */
+.hub-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.hub-back-btn:hover {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(212, 63, 82, 0.6);
+  transform: translateX(-2px);
+}
+.hub-back-btn .back-arrow {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* ── Main hero wrapper ─────────────────────────────────────────────────── */
+.hub-hero {
+  min-height: 100vh;
+  padding-top: 64px; /* header offset */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Bengaluru background image */
+.hub-bg-image {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/img/bengaluru_heritage_sunset.jpg');
+  background-size: cover;
+  background-position: center 20%;
+  background-repeat: no-repeat;
+  filter: brightness(0.78) saturate(0.9);
+  z-index: 0;
+}
+
+/* Gradient overlays for readability */
+.hub-bg-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right,
+      rgba(16, 43, 73, 0.75) 0%,
+      rgba(16, 43, 73, 0.35) 50%,
+      rgba(16, 43, 73, 0.1) 100%
+    ),
+    linear-gradient(to top,
+      rgba(16, 43, 73, 0.6) 0%,
+      transparent 60%
+    );
+}
+
+/* ── Content split layout ──────────────────────────────────────────────── */
+.hub-content-layout {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 40px;
+  padding: 40px 48px 48px;
+  align-items: center;
+  max-width: 1340px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: calc(100vh - 64px);
+}
+
+/* ── LEFT: Bus display panel ───────────────────────────────────────────── */
+.hub-bus-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding-bottom: 32px;
+}
+
+.hub-service-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hub-service-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--coral);
+}
+
+.hub-service-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.hub-service-subtitle {
+  font-size: 0.88rem;
+  color: rgba(250, 245, 235, 0.72);
+  font-weight: 500;
+  margin-top: 4px;
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+/* Bus SVG container */
+.hub-bus-display {
+  width: 100%;
+  position: relative;
+  animation: busFloat 4s ease-in-out infinite;
+}
+
+@keyframes busFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+.hub-bus-display svg,
+.hub-bus-display img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.6));
+}
+
+/* Service stats row */
+.hub-stats-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hub-stat-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hub-stat-value {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.hub-stat-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(250,245,235,0.6);
+}
+
+/* ── RIGHT: Feature cards grid ─────────────────────────────────────────── */
+.hub-cards-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hub-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.hub-feature-card {
+  background: rgba(250, 245, 235, 0.95);
+  border-radius: var(--radius-card);
+  padding: 24px 22px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(16, 43, 73, 0.08);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.3s var(--ease-spring),
+    box-shadow 0.3s ease,
+    background 0.25s ease;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: cardEntrance 0.5s var(--ease-smooth) both;
+}
+
+.hub-feature-card:nth-child(1) { animation-delay: 0.1s; }
+.hub-feature-card:nth-child(2) { animation-delay: 0.18s; }
+.hub-feature-card:nth-child(3) { animation-delay: 0.26s; }
+.hub-feature-card:nth-child(4) { animation-delay: 0.34s; }
+
+@keyframes cardEntrance {
+  0%   { opacity: 0; transform: translateY(24px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.hub-feature-card:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow: 0 16px 48px rgba(16, 43, 73, 0.22);
+  background: #FFFFFF;
+}
+
+/* Coral left accent bar */
+.hub-feature-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--coral);
+  border-radius: 4px 0 0 4px;
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.hub-feature-card:hover::before {
+  transform: scaleY(1);
+}
+
+/* Card icon wrapper */
+.card-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background: var(--royal-blue-pale);
+  border: 1px solid rgba(16, 43, 73, 0.1);
+  flex-shrink: 0;
+  transition: background 0.25s, transform 0.3s var(--ease-spring);
+}
+
+.hub-feature-card:hover .card-icon-wrap {
+  background: var(--coral-light);
+  transform: scale(1.12) rotate(-3deg);
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--royal-blue);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.card-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--coral);
+  transition: gap 0.2s, color 0.2s;
+}
+
+.hub-feature-card:hover .card-cta {
+  gap: 10px;
+  color: var(--coral-hover);
+}
+
+/* Large full-width "Enter Dashboard" card at bottom */
+.hub-enter-card {
+  background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-mid) 50%, var(--royal-blue-light) 100%);
+  color: var(--cream);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 28px;
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(16,43,73,0.4);
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
+  animation: cardEntrance 0.5s var(--ease-smooth) 0.42s both;
+  position: relative;
+  overflow: hidden;
+}
+
+.hub-enter-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.05));
+  pointer-events: none;
+}
+
+.hub-enter-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(16,43,73,0.5);
+}
+
+.enter-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.enter-card-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--coral);
+}
+
+.enter-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+}
+
+.enter-card-arrow {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--coral);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.3s var(--ease-spring);
+  box-shadow: 0 4px 16px var(--coral-glow);
+}
+
+.hub-enter-card:hover .enter-card-arrow {
+  background: var(--coral-hover);
+  transform: scale(1.12) translateX(3px);
+}
+
+/* ── Live indicator strip at bottom ────────────────────────────────────── */
+.hub-live-strip {
+  position: relative;
+  z-index: 10;
+  background: rgba(16, 43, 73, 0.9);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 10px 48px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  overflow: hidden;
+}
+
+.live-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(250,245,235,0.65);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4CAF50;
+  animation: livePulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+.live-strip-scroll {
+  display: flex;
+  gap: 32px;
+  animation: liveScroll 24s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes liveScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hub-content-layout {
+    grid-template-columns: 1fr;
+    padding: 32px 32px 40px;
+    gap: 32px;
+    min-height: auto;
+  }
+
+  .hub-bus-panel {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hub-service-subtitle { max-width: 100%; }
+  .hub-stats-row { justify-content: center; }
+
+  .hub-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hub-header { padding: 0 16px; }
+  .hub-service-label { display: none; }
+
+  .hub-content-layout { padding: 20px 16px 32px; }
+
+  .hub-cards-grid { grid-template-columns: 1fr; }
+
+  .hub-live-strip { padding: 10px 16px; }
+}

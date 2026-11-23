@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102B49">
+  <title>SANCHARA | BMTC Service Hub</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/bus-animations.css">
+  <link rel="stylesheet" href="css/service-hub.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER
+       ══════════════════════════════════════════════════ -->
+  <header class="hub-header">
+    <!-- Brand -->
+    <a href="../" class="hub-brand" aria-label="Sanchara Home">
+      <span class="hub-brand-logo">SANCHARA</span>
+      <span class="hub-brand-badge" id="headerServiceBadge">BMTC</span>
+    </a>
+
+    <!-- Center: Service Label -->
+    <div class="hub-service-label" aria-live="polite">
+      <div class="hub-service-icon" id="headerServiceIcon">🚌</div>
+      <span class="hub-service-name" id="headerServiceName">BMTC Ordinary Service</span>
+    </div>
+
+    <!-- Go Back -->
+    <a href="index.html" class="hub-back-btn" id="backBtn" aria-label="Go back to BMTC fleet selection">
+      <span class="back-arrow">←</span>
+      <span>Go Back to BMTC</span>
+    </a>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       HERO SECTION
+       ══════════════════════════════════════════════════ -->
+  <main class="hub-hero" role="main">
+
+    <!-- Bengaluru background image -->
+    <div class="hub-bg-image" role="presentation" aria-hidden="true"></div>
+
+    <!-- Content: Bus (left) + Cards (right) -->
+    <div class="hub-content-layout">
+
+      <!-- ── LEFT: Bus display + heading ──────────────────── -->
+      <div class="hub-bus-panel">
+        <div class="hub-service-heading">
+          <span class="hub-service-eyebrow" id="eyebrowLabel">NON-AC CITY FLEET</span>
+          <h1 class="hub-service-title" id="heroTitle">BMTC Ordinary<br>City Services</h1>
+          <p class="hub-service-subtitle" id="heroSubtitle">
+            The daily lifeline of Bengaluru — 7,941 routes connecting residential layouts, suburban hubs, markets, and colleges across the city.
+          </p>
+        </div>
+
+        <!-- Bus illustration -->
+        <div class="hub-bus-display" id="hubBusDisplay" aria-label="Bus illustration">
+          <!-- SVG inlined below; JS swaps content for vajra -->
+        </div>
+
+        <!-- Service stats -->
+        <div class="hub-stats-row" id="hubStatsRow">
+          <div class="hub-stat-chip">
+            <span class="hub-stat-value" id="statRoutes">7,941</span>
+            <span class="hub-stat-label">Verified Routes</span>
+          </div>
+          <div class="hub-stat-chip">
+            <span class="hub-stat-value" id="statStops">10,128</span>
+            <span class="hub-stat-label">Bus Stops</span>
+          </div>
+          <div class="hub-stat-chip">
+            <span class="hub-stat-value" id="statFare">From ₹5</span>
+            <span class="hub-stat-label">Stage Fare</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Feature cards ──────────────────────────── -->
+      <div class="hub-cards-panel">
+        <!-- 2×2 grid of feature cards -->
+        <div class="hub-cards-grid">
+
+          <!-- Card 1: Route Planner + Fare -->
+          <a href="dashboard.html?service=__SERVICE__&tab=tabPlanner" class="hub-feature-card card-link" id="cardRoutePlanner" aria-label="Open Route Planner and Fare Calculator">
+            <div class="card-icon-wrap">🗺️</div>
+            <div>
+              <div class="card-title">Route Planner<br>+ Fare Calculator</div>
+              <div class="card-desc">Find the best BMTC route between any two stops with live schedules and digital m-Ticket pricing.</div>
+            </div>
+            <span class="card-cta">Open Planner <span>→</span></span>
+          </a>
+
+          <!-- Card 2: Real-time Crowd Prediction -->
+          <a href="dashboard.html?service=__SERVICE__&tab=tabCrowd" class="hub-feature-card card-link" id="cardCrowd" aria-label="Open Real-time Crowd Prediction">
+            <div class="card-icon-wrap">👥</div>
+            <div>
+              <div class="card-title">Real-time Crowd<br>Prediction</div>
+              <div class="card-desc">AI-powered occupancy forecast per route & time-slot. Plan when to board for a comfortable ride.</div>
+            </div>
+            <span class="card-cta">View Live Data <span>→</span></span>
+          </a>
+
+          <!-- Card 3: Smart Service Alerts -->
+          <a href="dashboard.html?service=__SERVICE__&tab=tabAlerts" class="hub-feature-card card-link" id="cardAlerts" aria-label="Open Smart Service Alerts">
+            <div class="card-icon-wrap">⚠️</div>
+            <div>
+              <div class="card-title">Smart Service<br>Alerts</div>
+              <div class="card-desc">Diversions, breakdowns, peak-hour delays and special events — all in one live feed.</div>
+            </div>
+            <span class="card-cta">See Alerts <span>→</span></span>
+          </a>
+
+          <!-- Card 4: Complaint Box -->
+          <a href="dashboard.html?service=__SERVICE__&tab=tabComplaints" class="hub-feature-card card-link" id="cardComplaint" aria-label="Open Complaint Box">
+            <div class="card-icon-wrap">📝</div>
+            <div>
+              <div class="card-title">Complaint Box<br>& Grievance</div>
+              <div class="card-desc">Lodge and track grievances with BMTC's redressal cell. Response guaranteed within 48 hours.</div>
+            </div>
+            <span class="card-cta">File Complaint <span>→</span></span>
+          </a>
+
+        </div>
+
+        <!-- Full-width enter dashboard CTA -->
+        <a href="dashboard.html?service=__SERVICE__" class="hub-enter-card card-link" id="enterDashboardBtn" aria-label="Enter full dashboard">
+          <div class="enter-card-left">
+            <span class="enter-card-eyebrow">Full Transit Dashboard</span>
+            <span class="enter-card-title">Open Route Maps & All Tools →</span>
+          </div>
+          <div class="enter-card-arrow">→</div>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- ── Live status strip ─────────────────────────── -->
+    <div class="hub-live-strip" aria-label="Live service status">
+      <div class="live-strip-item">
+        <span class="live-dot"></span>
+        <span>BMTC LIVE</span>
+      </div>
+      <!-- Scrolling marquee -->
+      <div style="overflow:hidden; flex:1; position:relative;">
+        <div class="live-strip-scroll" id="liveStripScroll">
+          <span class="live-strip-item">🚌 Route 500-D — On Time — Kempegowda BS</span>
+          <span class="live-strip-item">🚌 Route 201G — 3 min delay — MG Road</span>
+          <span class="live-strip-item">🚌 Route 335E — On Time — Whitefield</span>
+          <span class="live-strip-item">⚠️ Diversion: Silk Board due to metro work until 22:00</span>
+          <span class="live-strip-item">🚌 Vajra V-500D — On Time — KIA Airport</span>
+          <span class="live-strip-item">✅ All AC Volvo corridors operational</span>
+          <!-- Duplicate for seamless scroll -->
+          <span class="live-strip-item">🚌 Route 500-D — On Time — Kempegowda BS</span>
+          <span class="live-strip-item">🚌 Route 201G — 3 min delay — MG Road</span>
+          <span class="live-strip-item">🚌 Route 335E — On Time — Whitefield</span>
+          <span class="live-strip-item">⚠️ Diversion: Silk Board due to metro work until 22:00</span>
+          <span class="live-strip-item">🚌 Vajra V-500D — On Time — KIA Airport</span>
+          <span class="live-strip-item">✅ All AC Volvo corridors operational</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       BUS TRANSITION OVERLAY (inlined here for navigation)
+       ══════════════════════════════════════════════════ -->
+  <script src="js/bus-animator.js"></script>
+
+  <script>
+    /* ═══════════════════════════════════════════════════
+       Service Hub Controller
+       Reads ?service=ordinary|vajra from URL and adapts
+       all copy, stats, bus SVG, and nav links.
+       ═══════════════════════════════════════════════════ */
+    (function() {
+      const params  = new URLSearchParams(window.location.search);
+      const service = params.get('service') || 'ordinary';
+      const isVajra = service === 'vajra';
+
+      // ── 1. Textual content swap ───────────────────────────────────────
+      const DATA = {
+        ordinary: {
+          badge:    'ORDINARY',
+          icon:     '🚌',
+          eyebrow:  'NON-AC CITY FLEET',
+          title:    'BMTC Ordinary\nCity Services',
+          subtitle: 'The daily lifeline of Bengaluru — 7,941 routes connecting residential layouts, suburban hubs, markets, and colleges across the city.',
+          routes:   '7,941',
+          stops:    '10,128',
+          fare:     'From ₹5',
+          busFile:  '/assets/svg/bmtc-ordinary-parked.svg',
+          enterLabel: 'Open Route Maps & All Tools'
+        },
+        vajra: {
+          badge:    'AC VOLVO',
+          icon:     '✈️',
+          eyebrow:  'CLIMATE-CONTROLLED LUXURY',
+          title:    'AC Volvo / Vajra\nExpress Services',
+          subtitle: 'Premium air-conditioned low-floor coaches on high-demand IT corridors — Outer Ring Road, Electronic City, Whitefield — and 24/7 KIA Airport routes.',
+          routes:   '298',
+          stops:    '1,840',
+          fare:     'From ₹120',
+          busFile:  '/assets/svg/bmtc-vajra-parked.svg',
+          enterLabel: 'Open AC Volvo Dashboard'
+        }
+      };
+
+      const d = DATA[service] || DATA.ordinary;
+
+      // Header
+      document.getElementById('headerServiceBadge').textContent = d.badge;
+      document.getElementById('headerServiceIcon').textContent  = d.icon;
+      document.getElementById('headerServiceName').textContent  = isVajra ? 'AC Volvo / Vajra Services' : 'BMTC Ordinary Service';
+
+      // Hero
+      document.getElementById('eyebrowLabel').textContent = d.eyebrow;
+      document.getElementById('heroTitle').innerHTML       = d.title.replace('\n', '<br>');
+      document.getElementById('heroSubtitle').textContent  = d.subtitle;
+
+      // Stats
+      document.getElementById('statRoutes').textContent = d.routes;
+      document.getElementById('statStops').textContent  = d.stops;
+      document.getElementById('statFare').textContent   = d.fare;
+
+      // Enter dashboard label
+      document.querySelector('.enter-card-title').textContent = d.enterLabel + ' →';
+
+      // ── 2. Bus SVG inline ─────────────────────────────────────────────
+      const busDisplay = document.getElementById('hubBusDisplay');
+      const busImg     = document.createElement('img');
+      busImg.src = d.busFile;
+      busImg.alt = isVajra ? 'AC Volvo Vajra Bus' : 'BMTC Ordinary City Bus';
+      busImg.style.width  = '100%';
+      busImg.style.height = 'auto';
+      busImg.style.filter = 'drop-shadow(0 20px 50px rgba(0,0,0,0.6))';
+      busDisplay.appendChild(busImg);
+
+      // ── 3. Wire up nav links with correct ?service= param ─────────────
+      document.querySelectorAll('.card-link').forEach(el => {
+        const href = el.getAttribute('href');
+        if (href) {
+          el.setAttribute('href', href.replace('__SERVICE__', service));
+        }
+      });
+
+      // ── 4. Card click → bus animator then navigate ─────────────────────
+      document.querySelectorAll('.card-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const dest = this.getAttribute('href');
+          if (!dest || dest === '#') return;
+          e.preventDefault();
+
+          const headsign = isVajra ? 'BOARDING AC VOLVO' : 'BOARDING BMTC';
+          const subtext  = isVajra
+            ? 'AC Vajra Corridor — Climate Control Active'
+            : 'Entering Bangalore City Transit Network';
+
+          if (window.BusAnimator) {
+            window.BusAnimator.navigateWithBus(dest, headsign, subtext, false, service);
+          } else {
+            window.location.href = dest;
+          }
+        });
+      });
+
+      // ── 5. Back button – animate with reverse ─────────────────────────
+      document.getElementById('backBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (window.BusAnimator) {
+          window.BusAnimator.navigateWithBus('index.html', 'RETURNING TO DEPOT', 'Back to Fleet Selection', true, service);
+        } else {
+          window.location.href = 'index.html';
+        }
+      });
+
+      // ── 6. Vajra: apply blue-cyan tint to card icons ──────────────────
+      if (isVajra) {
+        document.querySelectorAll('.hub-brand-badge').forEach(el => {
+          el.style.background = '#1F4E8A';
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

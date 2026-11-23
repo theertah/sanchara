@@ -1,0 +1,361 @@
+/* ==========================================================================
+   Sanchara landing page (dark theme, fits the viewport with no scrolling)
+   ========================================================================== */
+
+:root {
+  --bg: #121110;
+  --card: #1B1A18;
+  --text: #F4F0E6;
+  --muted: #A39E91;
+  --line: #2D2B27;
+  --gold: #C5A45D;
+  --gold-pale: #E8D9B5;
+
+  --font-display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-ui: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --ease: cubic-bezier(.22, .8, .24, 1);
+  --card-gap: clamp(12px, 2vh, 20px);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  overflow: hidden;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(197, 164, 93, .08), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Safety net: on extremely short screens, allow scrolling rather than clipping */
+@media (max-height: 400px) {
+  html, body { overflow-y: auto; }
+  .stage { height: auto; min-height: 100%; }
+}
+
+/* ---------- Layout ---------- */
+
+.stage {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 5vh, 64px);
+  padding:
+    max(clamp(16px, 3.5vh, 48px), env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right))
+    max(clamp(16px, 3.5vh, 48px), env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
+  transition: opacity .32s ease, transform .32s ease;
+}
+
+/* ---------- Identity ---------- */
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.wordmark {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.75rem, min(12vw, 13vh), 7.5rem);
+  line-height: 1;
+  letter-spacing: .06em;
+  padding-left: .06em; /* optically recentres the trailing letter-spacing */
+  color: var(--text);
+}
+
+.rule {
+  position: relative;
+  display: block;
+  width: 72px;
+  height: 1px;
+  margin: clamp(12px, 2.6vh, 22px) 0 clamp(10px, 2vh, 18px);
+  background: var(--gold);
+}
+.rule::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--gold);
+  transform: translate(-50%, -50%);
+}
+
+.tagline {
+  margin: 0;
+  font-size: clamp(.9rem, 2.2vw, 1.05rem);
+  font-weight: 400;
+  letter-spacing: .02em;
+  color: var(--muted);
+}
+
+/* ---------- Cards ---------- */
+
+.cards {
+  width: 100%;
+  max-width: 760px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--card-gap);
+}
+
+/* Travel Guide sits centred beneath the first row */
+.card--wide {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - (var(--card-gap) / 2));
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "icon  arrow"
+    "body  body";
+  align-content: space-between;
+  gap: clamp(14px, 3vh, 32px) 12px;
+  min-height: clamp(112px, 21vh, 176px);
+  padding: clamp(16px, 2.6vh, 22px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform .35s var(--ease),
+    box-shadow .35s var(--ease),
+    border-color .25s ease;
+}
+
+.card__icon {
+  grid-area: icon;
+  justify-self: start;
+  display: grid;
+  place-items: center;
+  width: clamp(40px, 6vh, 52px);
+  height: clamp(40px, 6vh, 52px);
+  border-radius: 50%;
+  background: rgba(197, 164, 93, .12);
+  color: var(--gold);
+  transition: background-color .3s ease;
+}
+.card__icon svg { width: 52%; height: 52%; transition: transform .45s var(--ease); }
+
+.card__arrow {
+  grid-area: arrow;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text);
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+.card__arrow svg { width: 16px; height: 16px; transition: transform .35s var(--ease); }
+
+.card__body { grid-area: body; display: flex; flex-direction: column; gap: 4px; }
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3.4vh, 1.85rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: .01em;
+}
+
+.card__desc {
+  font-size: .9rem;
+  color: var(--muted);
+}
+
+.needle { transform-box: fill-box; transform-origin: center; transition: transform .7s var(--ease); }
+
+.card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 18px 32px -18px rgba(0, 0, 0, .7);
+  }
+  .card:hover .card__icon { background: rgba(197, 164, 93, .22); }
+  .card:hover .card__arrow { background: var(--gold); border-color: var(--gold); color: #171717; }
+  .card:hover .card__arrow svg { transform: translate(2px, -2px); }
+
+  .card--bus:hover   .card__icon svg { transform: translateY(-2px) rotate(-4deg); }
+  .card--metro:hover .card__icon svg { transform: translateX(3px); }
+  .card--guide:hover .needle         { transform: rotate(50deg); }
+}
+
+.card:active { transform: translateY(-1px) scale(.99); }
+
+/* ---------- Background route lines ---------- */
+
+.routes {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.routes svg { width: 100%; height: 100%; display: block; }
+
+.route {
+  fill: none;
+  stroke: rgba(197, 164, 93, .3);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 2.6s var(--ease) .2s forwards;
+}
+.route--b { animation-delay: .5s; }
+
+.stops circle {
+  fill: var(--bg);
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  animation: fade-in .8s ease 2s forwards;
+}
+
+.traveler { fill: var(--gold); opacity: 0; }
+
+@supports (offset-path: path("M0 0 L1 1")) {
+  .traveler {
+    offset-path: path("M -40 700 C 120 640, 140 470, 260 420 S 380 250, 300 120");
+    offset-rotate: 0deg;
+    animation: travel 16s linear 3.2s infinite;
+  }
+  .traveler--b {
+    offset-path: path("M 1240 120 C 1080 170, 1060 330, 960 390 S 840 560, 920 700");
+    animation-delay: 7s;
+  }
+}
+
+/* ---------- Motion ---------- */
+
+/* "backwards" so hover transforms still work after the entrance finishes */
+.reveal {
+  animation: rise .9s var(--ease) backwards;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes draw    { to { stroke-dashoffset: 0; } }
+@keyframes fade-in { to { opacity: 1; } }
+@keyframes travel {
+  0%   { offset-distance: 0%;   opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+body.is-leaving .stage {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* ---------- Responsive ---------- */
+
+/* Phones: one column */
+@media (max-width: 640px) {
+  .cards { grid-template-columns: 1fr; max-width: 420px; }
+  .card--wide { width: 100%; }
+  .routes { opacity: .6; }
+}
+
+/* Phones and short windows: compact horizontal cards so everything fits */
+@media (max-width: 640px), (max-height: 560px) {
+  .card {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "icon body arrow";
+    align-items: center;
+    align-content: center;
+    gap: 16px;
+    min-height: 0;
+    padding: 14px 16px;
+  }
+  .card__icon { justify-self: auto; }
+  .card__title { font-size: 1.4rem; }
+  .card__desc { font-size: .85rem; line-height: 1.35; }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+  .route { stroke-dashoffset: 0; }
+  .stops circle { opacity: 1; }
+  .traveler { display: none; }
+}
+
+/* ---------- Placeholder page (travel-guide/index.html) ---------- */
+
+.placeholder { text-align: center; gap: 16px; }
+.placeholder h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 1.05;
+}
+.placeholder p { margin: 0; max-width: 34ch; color: var(--muted); }
+
+.back-link {
+  margin-top: 12px;
+  padding: 12px 22px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text);
+  font-size: .9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color .25s ease, transform .3s var(--ease);
+}
+.back-link:hover { border-color: var(--gold); transform: translateY(-2px); }
+.back-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }

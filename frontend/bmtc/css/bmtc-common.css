@@ -1,0 +1,396 @@
+/* ==========================================================================
+   SANCHARA - BMTC COMMON BRAND DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+  --navy: #173B64;
+  --deep-navy: #102B49;
+  --cream: #FAF5EB;
+  --warm-cream: #FFFDF9;
+  /* Regal Karnataka Crimson-Coral with vibrant pop (inspired by reference art) */
+  --coral: #C5384B;
+  --coral-hover: #A62436;
+  --coral-deep: #781F2C;
+  --coral-light: #FCE8EB;
+  --coral-glow: rgba(197, 56, 75, 0.45);
+  --white: #FFFFFF;
+  --dark-text: #202B38;
+  --muted-text: #77808C;
+  --border: #E6DFD2;
+  --border-focus: #173B64;
+  --card-bg: #FFFFFF;
+  --body-bg: #FAF5EB;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(16, 43, 73, 0.05);
+  --shadow-md: 0 8px 24px rgba(16, 43, 73, 0.08);
+  --shadow-lg: 0 16px 40px rgba(16, 43, 73, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+
+  --ease-smooth: cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  background-color: var(--body-bg);
+  background-image:
+    radial-gradient(ellipse at 50% 12%, rgba(255, 255, 255, 0.95) 0%, rgba(250, 245, 235, 0.6) 50%, rgba(240, 230, 215, 0.85) 100%);
+  color: var(--dark-text);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, .brand-title {
+  font-family: var(--font-serif);
+  color: var(--deep-navy);
+  font-weight: 500;
+}
+
+/* Header & Global Navigation */
+.sanchara-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--deep-navy);
+  color: var(--white);
+  padding: 14px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(16, 43, 73, 0.2);
+  border-bottom: 2px solid #20456E;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-logo-text {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+  color: var(--warm-cream);
+}
+
+.brand-section-badge {
+  background: var(--navy);
+  border: 1px solid #2C5685;
+  color: var(--coral);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-link-btn {
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.nav-link-btn:hover {
+  background: rgba(245, 237, 220, 0.12);
+  color: var(--white);
+  border-color: rgba(245, 237, 220, 0.25);
+}
+
+.nav-link-btn.btn-active {
+  background: var(--coral);
+  color: var(--white);
+}
+
+.nav-link-btn.btn-admin {
+  background: rgba(217, 118, 98, 0.15);
+  color: #FFA592;
+  border: 1px solid rgba(217, 118, 98, 0.4);
+}
+
+.nav-link-btn.btn-admin:hover {
+  background: var(--coral);
+  color: var(--white);
+}
+
+/* Service Switch Toggle (Header or Top Bar) */
+.service-toggle-pill {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 4px;
+}
+
+.service-toggle-btn {
+  border: none;
+  background: transparent;
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.service-toggle-btn.is-selected {
+  background: var(--coral);
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(217, 118, 98, 0.4);
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--navy);
+  color: var(--white);
+  border: 1px solid var(--deep-navy);
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s var(--ease-smooth);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: var(--deep-navy);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-coral {
+  background: var(--coral);
+  color: var(--white);
+  border: none;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.btn-coral:hover {
+  background: var(--coral-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(217, 118, 98, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--dark-text);
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  border-color: var(--navy);
+  background: var(--warm-cream);
+  color: var(--navy);
+}
+
+/* Cards & Containers */
+.card-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease;
+}
+
+.card-panel:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-ordinary {
+  background: #E8F0F8;
+  color: var(--navy);
+  border: 1px solid #C4D9ED;
+}
+
+.badge-vajra {
+  background: #E2F3F5;
+  color: #0E5A66;
+  border: 1px solid #A2D6DE;
+}
+
+.badge-vayu {
+  background: #EDE7F6;
+  color: #512DA8;
+  border: 1px solid #D1C4E9;
+}
+
+.badge-alert {
+  background: #FDE8E5;
+  color: #C62828;
+  border: 1px solid #F5C2BC;
+}
+
+/* Alerts Banner */
+.alert-strip {
+  background: var(--warm-cream);
+  border-left: 4px solid var(--coral);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Form Controls */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dark-text);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--dark-text);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(23, 59, 100, 0.12);
+}
+
+/* Modal styling */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(16, 43, 73, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-box {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  width: 100%;
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.modal-backdrop.is-open .modal-box {
+  transform: translateY(0);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--muted-text);
+  cursor: pointer;
+}
+
+/* Footer */
+.sanchara-footer {
+  background: var(--deep-navy);
+  color: var(--muted-text);
+  padding: 32px 24px;
+  text-align: center;
+  font-size: 0.88rem;
+  margin-top: 60px;
+  border-top: 1px solid #1E3D60;
+}
+
+.sanchara-footer a {
+  color: var(--cream);
+  text-decoration: none;
+}

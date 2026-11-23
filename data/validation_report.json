@@ -1,0 +1,15 @@
+{
+  "total_stops_records": 10128,
+  "unique_stop_names": 5236,
+  "stops_with_coordinates": 7990,
+  "geocoding_coverage_pct": 78.89,
+  "total_route_records": 8428,
+  "unique_route_names": 4895,
+  "service_breakdown": {
+    "Ordinary": 6765,
+    "Unknown": 1468,
+    "Vayu Vajra": 74,
+    "Vajra": 121
+  },
+  "total_graph_edges": 245645
+}

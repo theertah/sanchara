@@ -1,0 +1,398 @@
+/* ==========================================================================
+   SANCHARA - SIGNATURE CINEMATIC BUS TRANSITION  (Phase 3 - Urban Streetscape)
+   • Landing → BMTC: sweeping bus with road corridor enters, parks, then screen
+     dissolves into the service selection screen.
+   • Service-selection departure: selected bus only accelerates forward with
+     animated Bengaluru street environment, buildings scrolling past the window.
+   Two separate overlay contexts are supported via modifier classes:
+     .bus-transition-overlay           – landing → selection sweep
+     .bus-transition-overlay.is-vajra  – swap bus SVG to Vajra, cyan palette
+   ========================================================================== */
+
+/* ============================================================
+   FULLSCREEN TRANSIT CORRIDOR OVERLAY
+   ============================================================ */
+.bus-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Dark Bengaluru night sky — same for ordinary and Vajra */
+  background:
+    radial-gradient(ellipse at 50% 35%, #0F2D1E 0%, #081B12 50%, #030C07 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* Night sky for Vajra (same dark background) */
+.bus-transition-overlay.is-vajra {
+  background:
+    radial-gradient(ellipse at 50% 35%, #0F2D1E 0%, #081B12 50%, #030C07 100%);
+}
+
+.bus-transition-overlay.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Atmospheric glow (bokeh overlay) ──────────────────────────────────── */
+.bus-transition-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 70%, rgba(217, 118, 98, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 40%, rgba(255, 193, 7, 0.05) 0%, transparent 45%),
+    linear-gradient(to top, rgba(3, 12, 7, 0.65) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bus-transition-overlay.is-vajra::before {
+  background:
+    radial-gradient(ellipse at 20% 70%, rgba(217, 118, 98, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 40%, rgba(255, 193, 7, 0.06) 0%, transparent 45%),
+    linear-gradient(to top, rgba(3, 12, 7, 0.7) 0%, transparent 50%);
+}
+
+/* City-light background bokeh (Vajra) */
+.bus-transition-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 60%, rgba(255, 235, 150, 0.08) 0%, transparent 35%),
+    radial-gradient(circle at 85% 40%, rgba(255, 193, 7, 0.06) 0%, transparent 35%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   SPEED-WARP STREAKS
+   ============================================================ */
+.speed-warp-container {
+  position: absolute;
+  top: 5%;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.speed-streak {
+  position: absolute;
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0;
+}
+
+/* Ordinary BMTC streaks – warm amber */
+.speed-streak:nth-child(1) {
+  background: linear-gradient(90deg, transparent, rgba(255,193,7,0.7), transparent);
+}
+.speed-streak:nth-child(2) {
+  background: linear-gradient(90deg, transparent, rgba(255,235,150,0.6), transparent);
+}
+.speed-streak:nth-child(3) {
+  background: linear-gradient(90deg, transparent, rgba(255,193,7,0.5), transparent);
+}
+/* Vajra AC streaks – cyan */
+.bus-transition-overlay.is-vajra .speed-streak:nth-child(1) {
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,0.7), transparent);
+}
+.bus-transition-overlay.is-vajra .speed-streak:nth-child(2) {
+  background: linear-gradient(90deg, transparent, rgba(100,240,255,0.6), transparent);
+}
+.bus-transition-overlay.is-vajra .speed-streak:nth-child(3) {
+  background: linear-gradient(90deg, transparent, rgba(0,200,230,0.5), transparent);
+}
+
+.bus-transition-overlay.is-active .speed-streak:nth-child(1) {
+  top: 22%; width: 240px;
+  animation: streakPass 0.75s ease-in 0.15s infinite;
+}
+.bus-transition-overlay.is-active .speed-streak:nth-child(2) {
+  top: 52%; width: 360px;
+  animation: streakPass 0.60s ease-in 0.30s infinite;
+}
+.bus-transition-overlay.is-active .speed-streak:nth-child(3) {
+  top: 78%; width: 190px;
+  animation: streakPass 0.70s ease-in 0.05s infinite;
+}
+
+@keyframes streakPass {
+  0%   { transform: translateX(100vw);  opacity: 0; }
+  50%  { opacity: 0.9; }
+  100% { transform: translateX(-450px); opacity: 0; }
+}
+
+/* ============================================================
+   BENGALURU URBAN STREET ENVIRONMENT
+   This is the scrolling cityscape backdrop of buildings,
+   shops, hospital, school, police, library, bus stop & trees.
+   ============================================================ */
+.road-environment {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* ── The cityscape SVG strip ──────────────────────────────────────────── */
+.city-streetscape {
+  position: absolute;
+  bottom: calc(18% + 130px); /* sits just above the highway */
+  left: 0;
+  width: auto;             /* natural width of the SVG content */
+  min-width: 0;
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bus-transition-overlay.is-active .city-streetscape {
+  animation: streetScroll 4.5s linear infinite;
+}
+
+@keyframes streetScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-1400px); } /* scroll one segment width for seamless loop */
+}
+
+/* ── Individual street buildings ──────────────────────────────────────── */
+.street-building {
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Street trees */
+.street-tree {
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 36px;
+}
+
+/* ── Existing street lamp poles (kept, improved) ───────────────────────── */
+.env-light-pole {
+  position: absolute;
+  bottom: calc(18% + 130px);
+  width: 4px;
+  height: 110px;
+  background: linear-gradient(to top, #3A2C1E, #6B5033);
+  border-radius: 2px;
+  z-index: 15;
+}
+
+.env-light-pole::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -8px;
+  width: 20px;
+  height: 8px;
+  background: rgba(255, 220, 100, 0.85);
+  border-radius: 4px;
+  box-shadow: 0 0 18px 6px rgba(255, 220, 100, 0.35);
+}
+
+.env-light-pole:nth-child(1) { left: 8%; }
+.env-light-pole:nth-child(2) { left: 28%; }
+.env-light-pole:nth-child(3) { right: 12%; }
+.env-light-pole:nth-child(4) { right: 32%; }
+
+/* Animate poles rushing LEFT when bus is departing */
+.bus-transition-overlay.is-active .env-light-pole {
+  animation: poleSweepLeft 1.8s linear infinite;
+}
+
+.bus-transition-overlay.is-active .env-light-pole:nth-child(2) {
+  animation-delay: -0.45s;
+}
+.bus-transition-overlay.is-active .env-light-pole:nth-child(3) {
+  animation-delay: -0.9s;
+}
+.bus-transition-overlay.is-active .env-light-pole:nth-child(4) {
+  animation-delay: -1.35s;
+}
+
+@keyframes poleSweepLeft {
+  0%   { transform: translateX(0);     opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(-120vw); opacity: 0; }
+}
+
+/* ============================================================
+   TRANSIT STATUS HUD
+   ============================================================ */
+.transit-status-msg {
+  position: absolute;
+  top: 12%;
+  color: #FFF9EF;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.2rem, 5.2vw, 3.8rem);
+  letter-spacing: 0.08em;
+  text-align: center;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition:
+    opacity  0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.bus-transition-overlay.is-active .transit-status-msg {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.transit-headsign-title {
+  display: block;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6), 0 0 60px rgba(230,164,74,0.4);
+}
+
+.bus-transition-overlay.is-vajra .transit-headsign-title {
+  text-shadow: 0 0 30px rgba(0, 229, 255, 0.6), 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.transit-subtext {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.22em;
+  color: #D43F52;
+  margin-top: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.bus-transition-overlay.is-vajra .transit-subtext {
+  color: #00E5FF;
+}
+
+/* ============================================================
+   ROADWAY HIGHWAY CORRIDOR
+   ============================================================ */
+.highway-track {
+  position: absolute;
+  bottom: 18%;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  background: linear-gradient(180deg, #2A1F14 0%, #1C1409 60%, #0F0C06 100%);
+  border-top: 3px solid #D43F52;
+  border-bottom: 3px solid #C9A84C;
+  box-shadow:
+    0 -10px 40px rgba(200, 150, 50, 0.15),
+    0 15px 50px rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.bus-transition-overlay.is-vajra .highway-track {
+  background: linear-gradient(180deg, #101620 0%, #0A0E15 60%, #06090D 100%);
+  border-top-color: #00E5FF;
+  border-bottom-color: #E6DFD2;
+}
+
+/* Yellow edge lane */
+.highway-track::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 0; right: 0;
+  height: 3px;
+  background: rgba(201, 168, 76, 0.5);
+}
+
+/* Moving road dashes */
+.road-dash-lines {
+  position: absolute;
+  width: 250%;
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    #FFF9EF 0px,
+    #FFF9EF 75px,
+    transparent 75px,
+    transparent 150px
+  );
+  animation: moveRoadDashes 0.35s linear infinite;
+}
+
+@keyframes moveRoadDashes {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-150px); }
+}
+
+/* ============================================================
+   THE TRAVELING BUS
+   ============================================================ */
+.traveling-bus-wrapper {
+  position: absolute;
+  bottom: calc(18% + 10px);
+  left: -1550px;
+  width: clamp(920px, 92vw, 1460px);
+  height: auto;
+  z-index: 20;
+  will-change: left, transform;
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.95));
+}
+
+.traveling-bus-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Standard sweep: left → centre park → right exit */
+.bus-transition-overlay.is-active .traveling-bus-wrapper {
+  animation: expressBusSweep 2.1s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+/* Reverse sweep (back navigation) */
+.bus-transition-overlay.is-reverse.is-active .traveling-bus-wrapper {
+  animation: expressBusSweepReverse 2.1s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes expressBusSweep {
+  0%  { left: -1550px; transform: translateY(0); }
+  32% { left: calc(50% - clamp(460px, 46vw, 730px)); transform: translateY(-2px); }
+  56% { left: calc(50% - clamp(460px, 46vw, 730px)); transform: translateY(0); }
+  100%{ left: calc(100% + 1550px); transform: translateY(-1px); }
+}
+
+@keyframes expressBusSweepReverse {
+  0%  { left: calc(100% + 1550px); transform: scaleX(-1) translateY(0); }
+  32% { left: calc(50% - clamp(460px, 46vw, 730px)); transform: scaleX(-1) translateY(-2px); }
+  56% { left: calc(50% - clamp(460px, 46vw, 730px)); transform: scaleX(-1) translateY(0); }
+  100%{ left: -1550px; transform: scaleX(-1) translateY(-1px); }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .bus-transition-overlay.is-active,
+  .speed-streak,
+  .road-dash-lines,
+  .traveling-bus-wrapper,
+  .env-light-pole,
+  .city-streetscape {
+    animation: none !important;
+    transition: none !important;
+  }
+}
