@@ -1,137 +1,1074 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SANCHARA – Your City. Your Journey.</title>
-  <meta name="description" content="Explore Bengaluru with SANCHARA, your travel discovery guide.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fonts (Google Fonts). Remove these two lines if you prefer system fonts. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>SANCHARA – Your City. Your Journey.</title>
 
-  <link rel="stylesheet" href="css/travel-planner.css">
-</head>
-<body>
-  <!-- The background photo is set in travel-planner.css (see .page-background). -->
-  <div class="page-background" aria-hidden="true"></div>
+    <meta
+      name="description"
+      content="Explore Bengaluru with SANCHARA, your travel discovery guide."
+    />
 
-  <main class="page">
-    <div class="main-container">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-      <!-- ============ HEADER ============ -->
-<header class="site-header">
-  <h1 class="brand">SANCHARA</h1>
-  <div class="brand-divider" aria-hidden="true"><span></span></div>
-  <p class="page-title">Travel Guide · Explore Bengaluru</p>
-  <p class="tagline">Your City. Your Journey. Discover the Garden City, one thoughtful stop at a time.</p>
-</header>
-      <!-- ============ AI CHAT SECTION ============ -->
-      <section class="chat-section" aria-label="Ask SANCHARA">
-        <form class="chat-form" id="chat-form">
-          <label for="chat-input" class="visually-hidden">Ask SANCHARA</label>
-          <input
-            type="text"
-            id="chat-input"
-            class="chat-input"
-            placeholder="Where would you like to explore today?"
-            autocomplete="off">
-          <button type="submit" class="send-button">Send</button>
-        </form>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-        <!-- FUTURE: conversational AI messages will be rendered inside this div -->
-        <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
-      </section>
+    <link rel="stylesheet" href="css/travel-planner.css" />
 
-      <!-- ============ RECOMMENDED DESTINATIONS ============ -->
-      <section class="recommended" aria-labelledby="recommended-title">
-        <h2 id="recommended-title">Recommended for You</h2>
+    <!-- Leaflet Map CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
 
-        <div class="destination-grid">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
+    />
+  </head>
 
-          <!-- ===== CARD 1 ===== -->
-          <article class="destination-card">
-            <img src="assets/images/Bangalore%20Palace.jpg" alt="Bangalore Palace">
-            <div class="destination-info">
-              <span class="destination-category">Heritage</span>
-              <h3>Bangalore Palace</h3>
-              <p>Built in 1878 after Windsor Castle, Bangalore Palace is a Tudor-style landmark featuring fortified towers and vine-covered walls. Once home to the Wadiyar dynasty, it now serves as a premier heritage museum and cultural venue in Bengaluru.</p>
-              <button class="add-to-trip" type="button">Add to Trip</button>
+  <body>
+    <!-- DESTINATION DETAILS MODAL -->
+    <div id="destination-modal" class="destination-modal">
+      <div class="destination-modal-content">
+        <button id="close-modal" class="close-modal" type="button">
+          &times;
+        </button>
+
+        <img id="modal-image" src="" alt="Destination" class="modal-image" />
+
+        <div class="modal-info">
+          <span id="modal-category" class="destination-category"></span>
+
+          <h2 id="modal-title"></h2>
+
+          <p id="modal-description"></p>
+
+          <div class="modal-details">
+            <div class="detail-item">
+              <span class="detail-icon">📍</span>
+
+              <div>
+                <h4>Location</h4>
+                <p id="modal-location"></p>
+              </div>
             </div>
-          </article>
 
-          <!-- ===== CARD 2 ===== -->
-          <article class="destination-card">
-            <img src="assets/images/Cubbon%20Park.jpg" alt="Cubbon Park">
-            <div class= "destination-info">
-              <span class="destination-category">Garden</span>
-              <h3>Cubbon Park</h3>
-              <p>Established in 1870, Cubbon Park is a sprawling 300-acre green lung in the heart of Bengaluru, home to lush bamboo groves, vibrant flowering trees, and over 6,000 plants.</p>
-              <button class="add-to-trip" type="button">Add to Trip</button>
+            <div class="detail-item">
+              <span class="detail-icon">⏰</span>
+
+              <div>
+                <h4>Opening Hours</h4>
+                <p id="modal-hours"></p>
+              </div>
             </div>
-          </article>
 
-          <!-- ===== CARD 3 ===== -->
-          <article class="destination-card">
-            <img src="assets/images/Isckon%20Banglore.jpg" alt="ISKCON Bangalore">
-            <div class="destination-info">
-              <span class="destination-category">SPIRITUAL</span>
-              <h3>Isckon Temple</h3>
-              <p>Inaugurated in 1997 in Rajajinagar, the ISKCON Temple is one of the largest Radha-Krishna complexes in the world, blending traditional Dravidian and modern glass architecture.s as a major spiritual and cultural landmark in Bengaluru.</p>
-              <button class="add-to-trip" type="button">Add to Trip</button>
+            <div class="detail-item">
+              <span class="detail-icon">🌟</span>
+
+              <div>
+                <h4>Best Time to Visit</h4>
+                <p id="modal-best-time"></p>
+              </div>
             </div>
-          </article>
+          </div>
 
-          <!-- ===== CARD 4 ===== -->
-          <article class="destination-card">
-            <img src="assets/images/MG%20road.jpg" alt="MG Road">
-            <div class="destination-info">
-              <span class="destination-category">Shopping</span>
-              <h3>MG Road</h3>
-              <p>Stretching from Trinity Circle to Anil Kumble Circle, Mahatma Gandhi (MG) Road is Bengaluru’s bustling commercial and cultural spine, known for its upscale boutiques, historic bookshops, and vibrant cafes blends colonial-era charm with modern urban nightlife.</p>
-              <button class="add-to-trip" type="button">Add to Trip</button>
-            </div>
-          </article>
-
-          <!-- ===== CARD 5 ===== -->
-          <article class="destination-card">
-            <img src="assets/images/Art%20Musem.jpg" alt="National Gallery of Modern Art">
-            <div class="destination-info">
-              <span class="destination-category">Art and Cluture</span>
-              <h3>National Gallery of Mordern Art</h3>
-              <p>Housed in the heritage Manikyavelu Mansion on Palace Road, the National Gallery of Modern Art (NGMA) Bengaluru showcases around 500 works of Indian art spanning from the early 18th century to the present day.</p>
-              <button class="add-to-trip" type="button">Add to Trip</button>
-            </div>
-          </article>
-
-          <!-- ===== CARD 6 ===== -->
-          <article class="destination-card">
-            <img src="assets/images/CTR.jpg" alt="CTR">
-            <div class="destination-info">
-              <span class="destination-category">Food</span>
-              <h3>Central Tiffen Room</h3>
-              <p>Established in the 1920s in Malleshwaram, Central Tiffin Room (CTR) is an iconic Bengaluru eatery celebrated for its crisp, golden benne masala dosa and frothy filter coffee..</p>
-              <button class="add-to-trip" type="button">Add to Trip</button>
-            </div>
-          </article>
-
+          <div class="modal-buttons">
+            <a
+              id="directions-button"
+              href="#"
+              target="_blank"
+              class="directions-button"
+            >
+              🗺️ Get Directions
+            </a>
+          </div>
         </div>
-      </section>
-
-      <!-- ============ FUTURE SECTIONS (add below, inside .main-container) ============
-           <section id="itinerary">      Day-wise itinerary        </section>
-           <section id="transit">        BMTC / Namma Metro cards  </section>
-           <section id="map">            Interactive map           </section>
-           <section id="nearby">         Attractions, restaurants, medical facilities </section>
-      ================================================================================ -->
-
-      <footer class="site-footer">
-        <p>SANCHARA · Your City. Your Journey.</p>
-      </footer>
-
+      </div>
     </div>
-  </main>
 
-  <script src="script.js"></script>
-</body>
+    <!-- BACKGROUND -->
+    <div class="page-background" aria-hidden="true"></div>
+
+    <!-- MAIN WEBSITE -->
+    <main class="page">
+      <div class="main-container">
+        <!-- HEADER -->
+        <header class="site-header">
+          <h1 class="brand">SANCHARA</h1>
+
+          <div class="brand-divider" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <p class="page-title">Travel Guide · Explore Bengaluru</p>
+
+          <p class="tagline">
+            Your City. Your Journey. Discover the Garden City, one thoughtful
+            stop at a time.
+          </p>
+        </header>
+
+        <!-- AI CHAT SECTION -->
+        <section class="chat-section" aria-label="Ask SANCHARA">
+          <form class="chat-form" id="chat-form">
+            <label for="chat-input" class="visually-hidden">
+              Ask SANCHARA
+            </label>
+
+            <input
+              type="text"
+              id="chat-input"
+              class="chat-input"
+              placeholder="Where would you like to explore today?"
+              autocomplete="off"
+            />
+
+            <button type="submit" class="send-button">Send</button>
+          </form>
+
+          <div
+            class="chat-messages"
+            id="chat-messages"
+            aria-live="polite"
+          ></div>
+        </section>
+
+        <!-- RECOMMENDED DESTINATIONS -->
+        <section class="recommended" aria-labelledby="recommended-title">
+          <h2 id="recommended-title">Recommended for You</h2>
+
+          <!-- DESTINATION SEARCH -->
+          <div class="destination-search-container">
+            <input
+              type="text"
+              id="destination-search"
+              placeholder="🔍 Search destinations in Bengaluru..."
+              autocomplete="off"
+            />
+
+            <!-- DESTINATION FILTERS -->
+            <div class="destination-filters">
+              <button class="filter-btn active" data-category="all">
+                All Places
+              </button>
+
+              <button class="filter-btn" data-category="food">🍽️ Food</button>
+
+              <button class="filter-btn" data-category="cafe">☕ Cafes</button>
+
+              <button class="filter-btn" data-category="shopping">
+                🛍️ Shopping
+              </button>
+
+              <button class="filter-btn" data-category="nature">
+                🌳 Nature
+              </button>
+
+              <button class="filter-btn" data-category="heritage">
+                🏛️ Heritage
+              </button>
+            </div>
+
+            <button type="button" id="clear-search" aria-label="Clear search">
+              ✕
+            </button>
+          </div>
+
+          <p id="search-results-message"></p>
+
+          <!-- DESTINATION GRID -->
+          <div class="destination-grid">
+            <!-- CARD 1: BANGALORE PALACE -->
+            <article class="destination-card">
+              <img
+                src="assets/images/Bangalore%20Palace.jpg"
+                alt="Bangalore Palace"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Heritage</span>
+
+                <h3>Bangalore Palace</h3>
+
+                <p>
+                  Built in 1878 after Windsor Castle, Bangalore Palace is a
+                  Tudor-style landmark featuring fortified towers and
+                  vine-covered walls. Once home to the Wadiyar dynasty, it now
+                  serves as a premier heritage museum and cultural venue in
+                  Bengaluru.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 2: CUBBON PARK -->
+            <article class="destination-card">
+              <img src="assets/images/Cubbon%20Park.jpg" alt="Cubbon Park" />
+
+              <div class="destination-info">
+                <span class="destination-category">Garden</span>
+
+                <h3>Cubbon Park</h3>
+
+                <p>
+                  Established in 1870, Cubbon Park is a sprawling 300-acre green
+                  lung in the heart of Bengaluru, home to lush bamboo groves,
+                  vibrant flowering trees, and over 6,000 plants.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 3: ISKCON TEMPLE -->
+            <article class="destination-card">
+              <img
+                src="assets/images/Isckon%20Banglore.jpg"
+                alt="ISKCON Bangalore"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Spiritual</span>
+
+                <h3>Isckon Temple</h3>
+
+                <p>
+                  Inaugurated in 1997 in Rajajinagar, the ISKCON Temple is one
+                  of the largest Radha-Krishna complexes in the world, blending
+                  traditional Dravidian and modern glass architecture as a major
+                  spiritual and cultural landmark in Bengaluru.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 4: MG ROAD -->
+            <article class="destination-card">
+              <img src="assets/images/MG%20road.jpg" alt="MG Road" />
+
+              <div class="destination-info">
+                <span class="destination-category">Shopping</span>
+
+                <h3>MG Road</h3>
+
+                <p>
+                  Stretching from Trinity Circle to Anil Kumble Circle, Mahatma
+                  Gandhi (MG) Road is Bengaluru's bustling commercial and
+                  cultural spine, known for its upscale boutiques, historic
+                  bookshops, and vibrant cafes blends colonial-era charm with
+                  modern urban nightlife.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 5: NATIONAL GALLERY OF MODERN ART -->
+            <article class="destination-card">
+              <img
+                src="assets/images/Art%20Musem.jpg"
+                alt="National Gallery of Modern Art"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Art and Culture</span>
+
+                <h3>National Gallery of Modern Art</h3>
+
+                <p>
+                  Housed in the heritage Manikyavelu Mansion on Palace Road, the
+                  National Gallery of Modern Art (NGMA) Bengaluru showcases
+                  around 500 works of Indian art spanning from the early 18th
+                  century to the present day.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 6: CENTRAL TIFFIN ROOM -->
+            <article class="destination-card">
+              <img src="assets/images/CTR.jpg" alt="CTR" />
+
+              <div class="destination-info">
+                <span class="destination-category">Food</span>
+
+                <h3>Central Tiffin Room</h3>
+
+                <p>
+                  Established in the 1920s in Malleshwaram, Central Tiffin Room
+                  (CTR) is an iconic Bengaluru eatery celebrated for its crisp,
+                  golden benne masala dosa and frothy filter coffee.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 7: VIDYARTHI BHAVAN -->
+            <article class="destination-card">
+              <img src="assets/images/vidyarthi.jpg" alt="Vidyarthi Bhavan" />
+
+              <div class="destination-info">
+                <span class="destination-category">Food</span>
+
+                <h3>Vidyarthi Bhavan</h3>
+
+                <p>
+                  A legendary Bengaluru restaurant famous for its crispy benne
+                  dosa and traditional South Indian breakfast. Located in Gandhi
+                  Bazaar, it is a popular destination for food lovers.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 8: MTR -->
+            <article class="destination-card">
+              <img src="assets/images/mtr.jpg" alt="MTR Restaurant" />
+
+              <div class="destination-info">
+                <span class="destination-category">Food</span>
+
+                <h3>MTR</h3>
+
+                <p>
+                  Known for its traditional South Indian cuisine, MTR is a
+                  historic Bengaluru restaurant serving authentic breakfast,
+                  lunch and dinner experiences.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 9: RAMESHWARAM CAFE -->
+            <article class="destination-card">
+              <img src="assets/images/rameshwaram.jpg" alt="Rameshwaram Cafe" />
+
+              <div class="destination-info">
+                <span class="destination-category">Food</span>
+
+                <h3>Rameshwaram Cafe</h3>
+
+                <p>
+                  A popular South Indian food destination known for its
+                  ghee-rich dosas, idlis, coffee and lively dining atmosphere.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 10: MEGHANA FOODS -->
+            <article class="destination-card">
+              <img src="assets/images/meghana.jpg" alt="Meghana Foods" />
+
+              <div class="destination-info">
+                <span class="destination-category">Restaurant</span>
+
+                <h3>Meghana Foods</h3>
+
+                <p>
+                  A well-known restaurant offering Andhra-style cuisine,
+                  biryani, spicy dishes and a variety of Indian meals.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 11: NAGARJUNA -->
+            <article class="destination-card">
+              <img
+                src="assets/images/nagarjuna.jpg"
+                alt="Nagarjuna Restaurant"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Restaurant</span>
+
+                <h3>Nagarjuna</h3>
+
+                <p>
+                  A Bengaluru favourite serving Andhra-style meals, spicy
+                  curries, biryani and traditional South Indian flavours.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 12: TRUFFLES -->
+            <article class="destination-card">
+              <img src="assets/images/truffles.jpg" alt="Truffles Restaurant" />
+
+              <div class="destination-info">
+                <span class="destination-category">Restaurant</span>
+
+                <h3>Truffles</h3>
+
+                <p>
+                  A popular casual dining restaurant known for burgers, pasta,
+                  sandwiches and a relaxed atmosphere for friends and families.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 13: CORNER HOUSE -->
+            <article class="destination-card">
+              <img src="assets/images/corner-house.jpg" alt="Corner House" />
+
+              <div class="destination-info">
+                <span class="destination-category">Dessert</span>
+
+                <h3>Corner House</h3>
+
+                <p>
+                  A beloved Bengaluru dessert destination famous for ice creams,
+                  sundaes and its iconic Death by Chocolate.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+            <!-- CARD 14: DYU ART CAFE -->
+            <article class="destination-card">
+              <img src="assets/images/dyu-cafe.jpg" alt="DYU Art Cafe" />
+
+              <div class="destination-info">
+                <span class="destination-category">Cafe</span>
+
+                <h3>DYU Art Cafe</h3>
+
+                <p>
+                  A cozy cafe known for its artistic atmosphere, relaxed
+                  ambience, coffee and food. A perfect place to spend time with
+                  friends or enjoy a peaceful cafe experience.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 15: THIRD WAVE COFFEE -->
+            <article class="destination-card">
+              <img src="assets/images/third-wave.jpg" alt="Third Wave Coffee" />
+
+              <div class="destination-info">
+                <span class="destination-category">Cafe</span>
+
+                <h3>Third Wave Coffee</h3>
+
+                <p>
+                  A modern coffee chain offering speciality coffee, desserts,
+                  snacks and comfortable spaces for working or meeting friends.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 16: MATTEO COFFEE -->
+            <article class="destination-card">
+              <img src="assets/images/matteo.jpg" alt="Matteo Coffee" />
+
+              <div class="destination-info">
+                <span class="destination-category">Cafe</span>
+
+                <h3>Matteo Coffee</h3>
+
+                <p>
+                  A popular coffee spot offering a variety of coffee beverages,
+                  desserts and a relaxed cafe atmosphere in Bengaluru.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 17: COMMERCIAL STREET -->
+            <article class="destination-card">
+              <img
+                src="assets/images/commercial-street.jpg"
+                alt="Commercial Street"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Shopping</span>
+
+                <h3>Commercial Street</h3>
+
+                <p>
+                  A bustling shopping destination known for clothing, footwear,
+                  accessories, jewellery, street shopping and vibrant markets.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 18: BRIGADE ROAD -->
+            <article class="destination-card">
+              <img src="assets/images/brigade-road.jpg" alt="Brigade Road" />
+
+              <div class="destination-info">
+                <span class="destination-category">Shopping</span>
+
+                <h3>Brigade Road</h3>
+
+                <p>
+                  A lively Bengaluru street filled with shopping outlets,
+                  restaurants, cafes, boutiques and entertainment destinations.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 19: UB CITY -->
+            <article class="destination-card">
+              <img src="assets/images/ub-city.jpg" alt="UB City" />
+
+              <div class="destination-info">
+                <span class="destination-category">Luxury Shopping</span>
+
+                <h3>UB City</h3>
+
+                <p>
+                  A premium lifestyle destination featuring luxury brands, fine
+                  dining restaurants, cafes and elegant architecture in central
+                  Bengaluru.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 20: ORION MALL -->
+            <article class="destination-card">
+              <img src="assets/images/orion-mall.jpg" alt="Orion Mall" />
+
+              <div class="destination-info">
+                <span class="destination-category">Shopping</span>
+
+                <h3>Orion Mall</h3>
+
+                <p>
+                  A popular shopping and entertainment destination featuring
+                  fashion stores, restaurants, cafes, a cinema and entertainment
+                  activities.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 21: PHOENIX MARKETCITY -->
+            <article class="destination-card">
+              <img
+                src="assets/images/phoenix-mall.jpg"
+                alt="Phoenix Marketcity"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Shopping</span>
+
+                <h3>Phoenix Marketcity</h3>
+
+                <p>
+                  A large shopping and entertainment destination with
+                  international brands, restaurants, cinema experiences and
+                  activities.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 22: LALBAGH BOTANICAL GARDEN -->
+            <article class="destination-card">
+              <img
+                src="assets/images/lalbagh.jpg"
+                alt="Lalbagh Botanical Garden"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Garden</span>
+
+                <h3>Lalbagh Botanical Garden</h3>
+
+                <p>
+                  A historic botanical garden featuring beautiful landscapes,
+                  rare plants, glasshouse architecture, walking paths and a
+                  peaceful environment.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 23: ULSOOR LAKE -->
+            <article class="destination-card">
+              <img src="assets/images/ulsoor-lake.jpg" alt="Ulsoor Lake" />
+
+              <div class="destination-info">
+                <span class="destination-category">Nature</span>
+
+                <h3>Ulsoor Lake</h3>
+
+                <p>
+                  A scenic lake in Bengaluru offering peaceful surroundings,
+                  walking areas and beautiful views of the water and nearby
+                  greenery.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 24: SANKEY TANK -->
+            <article class="destination-card">
+              <img src="assets/images/sankey-tank.jpg" alt="Sankey Tank" />
+
+              <div class="destination-info">
+                <span class="destination-category">Nature</span>
+
+                <h3>Sankey Tank</h3>
+
+                <p>
+                  A peaceful lake surrounded by greenery, popular for morning
+                  walks, evening strolls and enjoying nature away from city
+                  traffic.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 25: VIDHANA SOUDHA -->
+            <article class="destination-card">
+              <img
+                src="assets/images/vidhana-soudha.jpg"
+                alt="Vidhana Soudha"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Landmark</span>
+
+                <h3>Vidhana Soudha</h3>
+
+                <p>
+                  An iconic Bengaluru landmark featuring impressive architecture
+                  and serving as the seat of the Karnataka state legislature.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 26: TIPU SULTAN'S SUMMER PALACE -->
+            <article class="destination-card">
+              <img
+                src="assets/images/tipu-palace.jpg"
+                alt="Tipu Sultan's Summer Palace"
+              />
+
+              <div class="destination-info">
+                <span class="destination-category">Heritage</span>
+
+                <h3>Tipu Sultan's Summer Palace</h3>
+
+                <p>
+                  A historic palace featuring Indo-Islamic architecture, ornate
+                  wooden pillars, beautiful interiors and stories from
+                  Bengaluru's royal past.
+                </p>
+
+                <div class="destination-buttons">
+                  <button class="view-details" type="button">
+                    View Details
+                  </button>
+                  <button class="view-on-map" type="button">
+                    📍 View on Map
+                  </button>
+                  <button class="add-to-trip" type="button">Add to Trip</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ================= MY TRIP SECTION ================= -->
+        <section class="my-trip-section" id="my-trip">
+          <div class="my-trip-header">
+            <div>
+              <h2>My Trip</h2>
+              <p>Your personalized Bengaluru travel itinerary</p>
+            </div>
+
+            <div class="trip-count">
+              <span id="trip-count">0</span>
+              <span>Destinations</span>
+            </div>
+          </div>
+
+          <div id="trip-destinations"></div>
+
+          <div id="empty-trip-message">
+            <div class="empty-trip-icon">🧳</div>
+
+            <h3>Your trip is empty!</h3>
+
+            <p>Start exploring Bengaluru and add destinations to your trip.</p>
+          </div>
+
+          <div class="trip-actions">
+            <button id="view-trip-map" class="trip-action-button" type="button">
+              🗺️ View Trip on Map
+            </button>
+
+            <div class="route-mode-container">
+              <label for="route-mode">Travel Mode:</label>
+
+              <select id="route-mode">
+                <option value="driving">🚗 Driving</option>
+                <option value="walking">🚶 Walking</option>
+                <option value="bmtc">🚌 BMTC</option>
+                <option value="metro">🚇 Namma Metro</option>
+              </select>
+            </div>
+
+            <button
+              id="show-trip-route"
+              class="trip-action-button route-button"
+              type="button"
+            >
+              🛣️ Show Route
+            </button>
+
+            <button
+              id="clear-trip"
+              class="trip-action-button clear-trip-button"
+              type="button"
+            >
+              🗑️ Clear Trip
+            </button>
+          </div>
+        </section>
+
+        <!-- ================= EXPLORE BENGALURU MAP ================= -->
+        <section class="map-section">
+          <div class="map-section-header">
+            <h2>Explore Bengaluru on Map</h2>
+
+            <p>
+              Discover restaurants, cafes, shopping destinations, nature spots
+              and heritage places around the city.
+            </p>
+          </div>
+
+          <div class="map-filters">
+            <button
+              class="map-filter active"
+              data-map-category="all"
+              type="button"
+            >
+              All Places
+            </button>
+
+            <button class="map-filter" data-map-category="food" type="button">
+              🍽️ Food
+            </button>
+
+            <button class="map-filter" data-map-category="cafe" type="button">
+              ☕ Cafes
+            </button>
+
+            <button
+              class="map-filter"
+              data-map-category="shopping"
+              type="button"
+            >
+              🛍️ Shopping
+            </button>
+
+            <button class="map-filter" data-map-category="nature" type="button">
+              🌳 Nature
+            </button>
+
+            <button
+              class="map-filter"
+              data-map-category="heritage"
+              type="button"
+            >
+              🏛️ Heritage
+            </button>
+          </div>
+
+          <div id="sanchara-map"></div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+          <p>SANCHARA · Your City. Your Journey.</p>
+        </footer>
+      </div>
+    </main>
+
+    <!-- LEAFLET MAP LIBRARY -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- LEAFLET ROUTING MACHINE -->
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+    <!-- MAIN CHATBOT -->
+    <script src="script.js"></script>
+
+    <!-- DESTINATION SEARCH AND FILTERS -->
+    <script src="destination-search.js"></script>
+
+    <!-- DESTINATION DETAILS MODAL -->
+    <script src="destination-details.js"></script>
+
+    <!-- INTERACTIVE MAP -->
+    <script src="destination-map.js"></script>
+  </body>
 </html>
